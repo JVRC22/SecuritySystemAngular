@@ -1,0 +1,91 @@
+<div class="flex">
+    <div class="basis-1/4"></div>
+    <div class="basis-1/2">
+        <div class="pt-6">
+            <nav class="flex justify-end">
+                <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                    <li class="inline-flex items-center">
+                        <p class="inline-flex items-center text-xl font-medium text-blue-700">Informacion de Cuenta</p>
+                    </li>
+    
+                    <li>
+                        <div class="flex items-center">
+                            <svg aria-hidden="true" class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                            <p href="#" class="ml-1 text-xl font-medium text-gray-700">Informacion Personal</p>
+                        </div>
+                    </li>
+    
+                    <li>
+                        <div class="flex items-center">
+                            <svg aria-hidden="true" class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                            <p href="#" class="ml-1 text-xl font-medium text-gray-700">Contraseña</p>
+                        </div>
+                    </li>
+    
+                    <li>
+                        <div class="flex items-center">
+                            <svg aria-hidden="true" class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                            <p href="#" class="ml-1 text-xl font-medium text-gray-700">Recuperacion</p>
+                        </div>
+                    </li>
+                </ol>
+            </nav>
+        </div>
+
+        <div class="flex pt-10">
+            <div class="basis-1/2">
+                <!--Foto-->
+                <div class="flex justify-center items-center pt-12">
+                    <img src="../../../../assets/SHOPSHIELD LOGO2.png" alt="logo" style="max-width: 400px; max-height: 400px;">
+                </div>
+            </div>
+
+            <div class="basis-1/2 py-5 px-6 border border-2">
+                <!--Formulario-->
+                <div>
+                    <h3 class="mb-4 text-center text-2xl font-medium text-gray-900">¡Bienvenido a ShopShield!</h3>
+                    <p class="mb-4 text-center text-md text-gray-700">Ingrese su información personal para crear una cuenta.</p>
+                    <form class="space-y-6" [formGroup]="form" (ngSubmit)="verificarDisponibilidad(form.value)">
+                        <!--Telefono-->
+                        <div>
+                            <label [ngClass]="{'text-red-700': form.get('username')?.invalid && form.get('username')?.touched}" for="username" class="block mb-2 text-sm font-medium text-gray-900">Nombre de Usuario</label>
+                            <input [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': form.get('username')?.invalid && form.get('username')?.touched}" formControlName="username" type="text" name="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Nombre" required>
+                            <p *ngIf="form.get('username')?.invalid && form.get('username')?.touched" class="mt-2 text-sm text-red-600">
+                                <span *ngIf="form.get('username')?.errors?.['required']" class="font-medium">¡Ha sucedido un error! El telefono es requerido.</span>
+                            </p>
+                        </div>
+
+                        <!--Email-->
+                        <div>
+                            <label [ngClass]="{'text-red-700': form.get('correo')?.invalid && form.get('correo')?.touched || invalido}" for="correo" class="block mb-2 text-sm font-medium text-gray-900">Correo</label>
+                            <input [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': form.get('correo')?.invalid && form.get('correo')?.touched || invalido}" formControlName="correo" type="email" name="correo" id="correo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="correo@company.com" required>
+                            <p *ngIf="form.get('correo')?.invalid && form.get('correo')?.touched" class="mt-2 text-sm text-red-600">
+                                <span *ngIf="form.get('correo')?.errors?.['required']" class="font-medium">¡Ha sucedido un error! El email es requerido.</span>
+                                <span *ngIf="form.get('correo')?.errors?.['email']" class="font-medium">¡Ha sucedido un error! El email no es válido.</span>
+                            </p>
+                        </div>
+
+                        <!--Telefono-->
+                        <div>
+                            <label [ngClass]="{'text-red-700': form.get('telefono')?.invalid && form.get('telefono')?.touched || invalido }" for="telefono" class="block mb-2 text-sm font-medium text-gray-900">Telefono</label>
+                            <input [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': form.get('telefono')?.invalid && form.get('telefono')?.touched || invalido}" formControlName="telefono" type="number" name="telefono" id="telefono" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="1234567890" min="0" required>
+                            <p *ngIf="form.get('telefono')?.invalid && form.get('telefono')?.touched" class="mt-2 text-sm text-red-600">
+                                <span *ngIf="form.get('correo')?.errors?.['required']" class="font-medium">¡Ha sucedido un error! El telefono es requerido.</span>
+                            </p>
+                        </div>
+
+                        <!--Informacion Personal-->
+                        <button [ngClass]="{'button-failed': apiFailed}" (animationend)="onAnimationEnd()" type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Revisar los datos</button>
+
+                        <!--Register-->
+                        <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
+                            ¿Ya tienes una cuenta registrada? 
+                            <a routerLink="/login" class="text-blue-700 hover:underline dark:text-blue-500">Iniciar sesión</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="basis-1/4"></div>
+</div>
