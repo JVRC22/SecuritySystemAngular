@@ -30,4 +30,29 @@ export class SidebarComponent implements OnInit {
       });
     }
   }
+
+  usuarios()
+  {
+    location.assign('/usuarios');
+  }
+
+  moderadores()
+  {
+    location.assign('/moderadores');
+  }
+
+  tiendas()
+  {
+    location.assign('/tiendas');
+  }
+
+  invitados()
+  {
+    location.assign('/invitados');
+  }
+
+  peticiones()
+  {
+    location.assign('/peticiones');
+  }
 }

@@ -11,14 +11,24 @@ import { AdminService } from 'src/app/Services/admin.service';
 })
 export class ModeradoresComponent implements OnInit {
 
+  formAddModerador: FormGroup;
   formUsuario: FormGroup;
   formPassword: FormGroup;
 
   usuarios: User[] = [];
   user!: User;
 
+  invalido: boolean = false;
+
   constructor(private router: Router, private adminService: AdminService, private fb: FormBuilder, private route: ActivatedRoute) 
   {
+    this.formAddModerador = this.fb.group({
+      username:  ['', [Validators.required, Validators.minLength(5)]],
+      correo:  ['', [Validators.required, Validators.email]],
+      telefono:  ['', [Validators.required, Validators.min(1000000000)]],
+      password:  ['', [Validators.required, Validators.minLength(8)]],
+    });
+
     this.formUsuario = this.fb.group({
       username:  ['', [Validators.required, Validators.minLength(5)]],
       estatus:  ['', [Validators.required]],
@@ -51,6 +61,18 @@ export class ModeradoresComponent implements OnInit {
       },
       (error) => {
         console.log(error);
+      }
+    );
+  }
+
+  addUsuarioModerador(user: User)
+  {
+    this.adminService.addUsuarioModerador(user).subscribe(
+      response => {
+        location.reload();
+      },
+      error => {
+        alert("Error al agregar el moderador.");
       }
     );
   }
