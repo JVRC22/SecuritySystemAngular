@@ -23,7 +23,7 @@ export class SidebarComponent implements OnInit {
     {
       this.loginService.logout().subscribe(response => {
         localStorage.clear();
-        this.router.navigate(['/']);
+        this.router.navigate(['/home']);
       },
       error => {
         console.log(error);

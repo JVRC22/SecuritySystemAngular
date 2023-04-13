@@ -1,61 +1,40 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from '../Interfaces/user';
-import { environment } from 'src/environments/environment';
 import { catchError, retry, throwError } from 'rxjs';
-import { Pregunta } from '../Interfaces/pregunta';
-import { InfoRegistroService } from './info-registro.service';
+import { environment } from 'src/environments/environment';
+import { User } from '../Interfaces/user';
+import { InfoUsuario } from '../Interfaces/info-usuario';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class AdminService {
 
   private url_api = environment.urlapi;
 
-  constructor(private http: HttpClient, private infoRegistroService: InfoRegistroService) { }
+  constructor(private http: HttpClient) { }
 
-  login(user: User)
+  getUsuariosNormales()
   {
-    return this.http.post<User>(this.url_api+ "/login", user)
+    return this.http.get<User[]>(this.url_api + "/users/normal")
     .pipe(
       retry(3),
       catchError(this.handleError)
     );
   }
 
-  logout()
+  getUsuariosModeradores()
   {
-    return this.http.get(this.url_api + "/logout")
+    return this.http.get<User[]>(this.url_api + "/users/mod")
     .pipe(
       retry(3),
       catchError(this.handleError)
     );
   }
 
-  registerUsuario()
+  getInfoUsuario()
   {
-    const info_registro = this.infoRegistroService.getInfoRegistro();
-
-    return this.http.post(this.url_api + "/registro/complete", info_registro)
-    .pipe(
-      retry(3),
-      catchError(this.handleError)
-    );
-  }
-
-  verificarDisponibilidad(user: User)
-  {
-    return this.http.post(this.url_api + "/verify/access", user)
-    .pipe(
-      retry(3),
-      catchError(this.handleError)
-    );
-  }
-
-  verPreguntas()
-  {
-    return this.http.get<Pregunta[]>(this.url_api + "/preguntas")
+    return this.http.get<InfoUsuario>(this.url_api + "/users/info")
     .pipe(
       retry(3),
       catchError(this.handleError)

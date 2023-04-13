@@ -5,7 +5,7 @@
             <nav class="flex justify-end">
                 <ol class="inline-flex items-center space-x-1 md:space-x-3">
                     <li class="inline-flex items-center">
-                        <p class="inline-flex items-center text-xl font-medium text-blue-700">Informacion de Cuenta</p>
+                        <a routerLink="/register" class="inline-flex items-center text-xl font-medium text-blue-700 hover:text-blue-900">Informacion de Cuenta</a>
                     </li>
     
                     <li>
@@ -36,7 +36,7 @@
             <div class="basis-1/2">
                 <!--Foto-->
                 <div class="flex justify-center items-center pt-12">
-                    <img src="../../../../assets/SHOPSHIELD LOGO2.png" alt="logo" style="max-width: 400px; max-height: 400px;">
+                    <img src="../../../../../assets/logo-nombre.png" alt="logo" style="max-width: 400px; max-height: 400px;">
                 </div>
             </div>
 
@@ -45,13 +45,14 @@
                 <div>
                     <h3 class="mb-4 text-center text-2xl font-medium text-gray-900">¡Bienvenido a ShopShield!</h3>
                     <p class="mb-4 text-center text-md text-gray-700">Ingrese su información personal para crear una cuenta.</p>
-                    <form class="space-y-6" [formGroup]="form">
+                    <form class="space-y-6" [formGroup]="form" (ngSubmit)="guardarInfoPersonal(form.value)">
                         <!--Nombre-->
                         <div>
                             <label [ngClass]="{'text-red-700': form.get('nombre')?.invalid && form.get('nombre')?.touched}" for="nombre" class="block mb-2 text-sm font-medium text-gray-900">Nombre</label>
                             <input [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': form.get('nombre')?.invalid && form.get('nombre')?.touched}" formControlName="nombre" type="text" name="nombre" id="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Juan José" required>
                             <p *ngIf="form.get('nombre')?.invalid && form.get('nombre')?.touched" class="mt-2 text-sm text-red-600">
                                 <span *ngIf="form.get('nombre')?.errors?.['required']" class="font-medium">¡Ha sucedido un error! El nombre es requerido.</span>
+                                <span *ngIf="form.get('nombre')?.errors?.['minlength']" class="font-medium">¡Ha sucedido un error! El nombre debe tener al menos 3 caracteres.</span>
                             </p>
                         </div>
 
@@ -62,6 +63,7 @@
                                 <input [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': form.get('ap_paterno')?.invalid && form.get('ap_paterno')?.touched}" formControlName="ap_paterno" type="text" name="ap_paterno" id="ap_paterno" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Rodríguez" required>
                                 <p *ngIf="form.get('ap_paterno')?.invalid && form.get('ap_paterno')?.touched" class="mt-2 text-sm text-red-600">
                                     <span *ngIf="form.get('ap_paterno')?.errors?.['required']" class="font-medium">¡Ha sucedido un error! El apellido paterno es requerido.</span>
+                                    <span *ngIf="form.get('ap_paterno')?.errors?.['minlength']" class="font-medium">¡Ha sucedido un error! El apellido paterno debe tener al menos 3 caracteres.</span>
                                 </p>
                             </div>
 
@@ -71,6 +73,7 @@
                                 <input [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': form.get('ap_materno')?.invalid && form.get('ap_materno')?.touched}" formControlName="ap_materno" type="text" name="ap_materno" id="ap_materno" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="García" required>
                                 <p *ngIf="form.get('ap_materno')?.invalid && form.get('ap_materno')?.touched" class="mt-2 text-sm text-red-600">
                                     <span *ngIf="form.get('ap_materno')?.errors?.['required']" class="font-medium">¡Ha sucedido un error! El apellido materno es requerido.</span>
+                                    <span *ngIf="form.get('ap_materno')?.errors?.['minlength']" class="font-medium">¡Ha sucedido un error! El apellido materno debe tener al menos 3 caracteres.</span>
                                 </p>
                             </div>
                         </div>
@@ -91,16 +94,16 @@
 
                             <!--Fecha de Nacimiento-->
                             <div class="basis-1/2 ml-2">
-                                <label [ngClass]="{'text-red-700': form.get('f_nacimiento')?.invalid && form.get('f_nacimiento')?.touched}" for="f_nacimiento" class="block mb-2 text-sm font-medium text-gray-900">Fecha de Nacimiento</label>
-                                <input [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': form.get('f_nacimiento')?.invalid && form.get('f_nacimiento')?.touched}" formControlName="f_nacimiento" type="date" name="f_nacimiento" id="f_nacimiento" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
-                                <p *ngIf="form.get('f_nacimiento')?.invalid && form.get('f_nacimiento')?.touched" class="mt-2 text-sm text-red-600">
-                                    <span *ngIf="form.get('f_nacimiento')?.errors?.['required']" class="font-medium">¡Ha sucedido un error! La fecha de nacimiento es requerida.</span>
+                                <label [ngClass]="{'text-red-700': form.get('fecha_nacimiento')?.invalid && form.get('fecha_nacimiento')?.touched}" for="fecha_nacimiento" class="block mb-2 text-sm font-medium text-gray-900">Fecha de Nacimiento</label>
+                                <input [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': form.get('fecha_nacimiento')?.invalid && form.get('fecha_nacimiento')?.touched}" formControlName="fecha_nacimiento" type="date" name="fecha_nacimiento" id="fecha_nacimiento" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                                <p *ngIf="form.get('fecha_nacimiento')?.invalid && form.get('fecha_nacimiento')?.touched" class="mt-2 text-sm text-red-600">
+                                    <span *ngIf="form.get('fecha_nacimiento')?.errors?.['required']" class="font-medium">¡Ha sucedido un error! La fecha de nacimiento es requerida.</span>
                                 </p>
                             </div>
                         </div>
 
                         <!--Informacion Personal-->
-                        <button routerLink="/password" type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Revisar los datos</button>
+                        <button [disabled]="form.invalid" type="submit" [ngClass]="{'hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300': !form.invalid, 'bg-blue-300': form.invalid}" class="w-full text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Revisar los datos</button>
 
                         <!--Register-->
                         <div class="text-sm font-medium text-gray-500 dark:text-gray-300">

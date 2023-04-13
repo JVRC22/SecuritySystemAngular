@@ -5,20 +5,20 @@
             <nav class="flex justify-end">
                 <ol class="inline-flex items-center space-x-1 md:space-x-3">
                     <li class="inline-flex items-center">
-                        <p class="inline-flex items-center text-xl font-medium text-blue-700">Informacion de Cuenta</p>
+                        <a routerLink="/password" class="inline-flex items-center text-xl font-medium text-blue-700 hover:text-blue-900">Informacion de Cuenta</a>
                     </li>
     
                     <li>
                         <div class="flex items-center">
                             <svg aria-hidden="true" class="w-6 h-6 text-blue-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-                            <p class="ml-1 text-xl font-medium text-blue-700">Informacion Personal</p>
+                            <a routerLink="/register" class="ml-1 text-xl font-medium text-blue-700 hover:text-blue-900">Informacion Personal</a>
                         </div>
                     </li>
     
                     <li>
                         <div class="flex items-center">
                             <svg aria-hidden="true" class="w-6 h-6 text-blue-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-                            <p class="ml-1 text-xl font-medium text-blue-700">Contraseña</p>
+                            <a routerLink="/password" class="ml-1 text-xl font-medium text-blue-700 hover:text-blue-900">Contraseña</a>
                         </div>
                     </li>
     
@@ -36,7 +36,7 @@
             <div class="basis-1/2">
                 <!--Foto-->
                 <div class="flex justify-center items-center pt-12">
-                    <img src="../../../../assets/SHOPSHIELD LOGO2.png" alt="logo" style="max-width: 400px; max-height: 400px;">
+                    <img src="../../../../../assets/logo-nombre.png" alt="logo" style="max-width: 400px; max-height: 400px;">
                 </div>
             </div>
 
@@ -45,16 +45,16 @@
                 <div>
                     <h3 class="mb-4 text-center text-2xl font-medium text-gray-900">¡Bienvenido a ShopShield!</h3>
                     <p class="mb-4 text-center text-md text-gray-700">Ingrese su información personal para crear una cuenta.</p>
-                    <form class="space-y-6" [formGroup]="form">
+                    <form class="space-y-6" [formGroup]="form" (ngSubmit)="register(form.value)">
                         <!--Pregunta-->
                         <div>
-                            <label [ngClass]="{'text-red-700': form.get('pregunta')?.invalid && form.get('pregunta')?.touched}" for="pregunta" class="block mb-2 text-sm font-medium text-gray-900">Selecciona una de las preguntas de recuperación:</label>
-                            <select [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': form.get('pregunta')?.invalid && form.get('pregunta')?.touched}" formControlName="pregunta"name="pregunta" id="pregunta" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                            <label [ngClass]="{'text-red-700': form.get('pregunta_id')?.invalid && form.get('pregunta_id')?.touched}" for="pregunta_id" class="block mb-2 text-sm font-medium text-gray-900">Selecciona una de las preguntas de recuperación:</label>
+                            <select [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': form.get('pregunta_id')?.invalid && form.get('pregunta_id')?.touched}" formControlName="pregunta_id" name="pregunta_id" id="pregunta_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                                 <option value="" disabled selected>Selecciona una pregunta</option>
-                                <option value="{{pregunta.id}}" *ngFor="let pregunta of preguntas">{{pregunta.pregunta}}<option>
+                                <option value="{{pregunta.id}}" *ngFor="let pregunta of preguntas">{{pregunta.pregunta}}<option></option>
                             </select>
-                            <p *ngIf="form.get('password')?.invalid && form.get('password')?.touched" class="mt-2 text-sm text-red-600">
-                                <span *ngIf="form.get('password')?.errors?.['required']" class="font-medium">¡Ha sucedido un error! La contraseña es requerida.</span>
+                            <p *ngIf="form.get('pregunta_id')?.invalid && form.get('pregunta_id')?.touched" class="mt-2 text-sm text-red-600">
+                                <span *ngIf="form.get('pregunta_id')?.errors?.['required']" class="font-medium">¡Ha sucedido un error! La contraseña es requerida.</span>
                             </p>
                         </div>
 
@@ -64,11 +64,12 @@
                             <input [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': form.get('respuesta')?.invalid && form.get('respuesta')?.touched}" formControlName="respuesta" type="text" name="respuesta" id="respuesta" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="••••••••" required>
                             <p *ngIf="form.get('respuesta')?.invalid && form.get('respuesta')?.touched" class="mt-2 text-sm text-red-600">
                                 <span *ngIf="form.get('respuesta')?.errors?.['required']" class="font-medium">¡Ha sucedido un error! La respuesta es requerida.</span>
+                                <span *ngIf="form.get('respuesta')?.errors?.['minlength']" class="font-medium">¡Ha sucedido un error! La respuesta debe tener al menos 4 caracteres.</span>
                             </p>
                         </div>
 
                         <!--Informacion Personal-->
-                        <button routerLink="/home" type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Revisar los datos</button>
+                        <button [disabled]="form.invalid" [ngClass]="{'button-failed': apiFailed}" (animationend)="onAnimationEnd()" type="submit" [ngClass]="{'hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300': !form.invalid, 'bg-blue-300': form.invalid}" class="w-full text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Registrarse</button>
 
                         <!--Register-->
                         <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
