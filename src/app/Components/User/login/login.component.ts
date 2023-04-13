@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   {
     this.form = this.fb.group({
       correo_o_telefono:  ['', [Validators.required]],
-      password:  ['', [Validators.required]],
+      password:  ['', [Validators.required, Validators.minLength(8)]],
     });
   }
 

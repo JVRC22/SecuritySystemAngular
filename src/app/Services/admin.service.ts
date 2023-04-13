@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, retry, throwError } from 'rxjs';
+import { Observable, catchError, retry, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../Interfaces/user';
 import { InfoUsuario } from '../Interfaces/info-usuario';
@@ -14,7 +14,36 @@ export class AdminService {
 
   constructor(private http: HttpClient) { }
 
-  getUsuariosNormales()
+  //Ambos
+  getUsuarioUnico(id: number): Observable<User>
+  {
+    return this.http.get<User>(this.url_api + "/user/" + id)
+    .pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
+  updateUsuario(id: number, user: User)
+  {
+    return this.http.put<User>(this.url_api + "/users/" + id, user)
+    .pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
+  updateUsuarioPassword(id: number, user: User)
+  {
+    return this.http.put<User>(this.url_api + "/users/password/" + id, user)
+    .pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
+  //Usuarios Gestion
+  getUsuariosNormales(): Observable<User[]>
   {
     return this.http.get<User[]>(this.url_api + "/users/normal")
     .pipe(
@@ -23,7 +52,37 @@ export class AdminService {
     );
   }
 
-  getUsuariosModeradores()
+  getInfoUsuario(id: number)
+  {
+    return this.http.get<InfoUsuario>(this.url_api + "/users/info/" + id)
+    .pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+  
+  updateInfoUsuario(info: InfoUsuario)
+  {
+    const id = info.id;
+
+    return this.http.put<InfoUsuario>(this.url_api + "/users/info/" + id, info)
+    .pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
+  deleteUsuario(id: number)
+  {
+    return this.http.delete(this.url_api + "/users/" + id)
+    .pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
+  //Moderadores Gestion
+  getUsuariosModeradores(): Observable<User[]>
   {
     return this.http.get<User[]>(this.url_api + "/users/mod")
     .pipe(
@@ -32,9 +91,18 @@ export class AdminService {
     );
   }
 
-  getInfoUsuario()
+  addUsuarioModerador(user: User)
   {
-    return this.http.get<InfoUsuario>(this.url_api + "/users/info")
+    return this.http.post<User>(this.url_api + "/users/mod", user)
+    .pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
+  deleteUsuarioModerador(id: number)
+  {
+    return this.http.delete(this.url_api + "/users/mod/" + id)
     .pipe(
       retry(3),
       catchError(this.handleError)

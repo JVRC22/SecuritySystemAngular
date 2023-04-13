@@ -27,6 +27,7 @@
                     <input [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': form.get('password')?.invalid && form.get('password')?.touched || invalido}" formControlName="password" type="password" name="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="••••••••" required>
                     <p *ngIf="form.get('password')?.invalid && form.get('password')?.touched" class="mt-2 text-sm text-red-600">
                         <span *ngIf="form.get('password')?.errors?.['required']" class="font-medium">¡Ha sucedido un error! La contraseña es requerida.</span>
+                        <span *ngIf="form.get('password')?.errors?.['minlength']" class="font-medium">¡Ha sucedido un error! La contraseña debe tener al menos 8 caracteres.</span>
                     </p>
                 </div>
 
