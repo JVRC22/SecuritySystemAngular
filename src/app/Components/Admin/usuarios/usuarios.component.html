@@ -87,20 +87,32 @@
                         <form class="mb-6" [formGroup]="formInfoUsuario" (ngSubmit)="modificarInfoUsuario(formInfoUsuario.value)">
                             <!--Nombre-->
                             <div class="mb-6">
-                               <label for="nombre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
-                               <input formControlName="nombre" name="nombre" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Juan José" required>
+                               <label [ngClass]="{'text-red-700': formInfoUsuario.get('nombre')?.invalid && formInfoUsuario.get('nombre')?.touched}" for="nombre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
+                               <input [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': formInfoUsuario.get('nombre')?.invalid && formInfoUsuario.get('nombre')?.touched}" formControlName="nombre" name="nombre" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Juan José" required>
+                               <p *ngIf="formInfoUsuario.get('nombre')?.invalid && formInfoUsuario.get('nombre')?.touched" class="mt-2 text-sm text-red-600">
+                                <span *ngIf="formInfoUsuario.get('nombre')?.errors?.['required']" class="font-medium">¡Ha sucedido un error! El nombre es requerido.</span>
+                                <span *ngIf="formInfoUsuario.get('nombre')?.errors?.['minlength']" class="font-medium">¡Ha sucedido un error! El nombre debe tener al menos 3 caracteres.</span>
+                            </p>
                             </div>
 
                             <!--Apellido Paterno-->
                             <div class="mb-6">
-                               <label for="ap_paterno" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellido Paterno</label>
-                               <input formControlName="ap_paterno" name="ap_paterno" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Rodríguez" required>
+                                <label [ngClass]="{'text-red-700': formInfoUsuario.get('ap_paterno')?.invalid && formInfoUsuario.get('ap_paterno')?.touched}" for="ap_paterno" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellido Paterno</label>
+                                <input [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': formInfoUsuario.get('ap_paterno')?.invalid && formInfoUsuario.get('ap_paterno')?.touched}" formControlName="ap_paterno" name="ap_paterno" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Rodríguez" required>
+                                <p *ngIf="formInfoUsuario.get('ap_paterno')?.invalid && formInfoUsuario.get('ap_paterno')?.touched" class="mt-2 text-sm text-red-600">
+                                    <span *ngIf="formInfoUsuario.get('ap_paterno')?.errors?.['required']" class="font-medium">¡Ha sucedido un error! El apellido paterno es requerido.</span>
+                                    <span *ngIf="formInfoUsuario.get('ap_paterno')?.errors?.['minlength']" class="font-medium">¡Ha sucedido un error! El apellido paterno debe tener al menos 3 caracteres.</span>
+                                </p>
                             </div>
 
                             <!--Apellido Materno-->
                             <div class="mb-6">
-                                <label for="ap_materno" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellido Materno</label>
-                                <input formControlName="ap_materno" name="ap_materno" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="García" required>
+                                <label [ngClass]="{'text-red-700': formInfoUsuario.get('ap_materno')?.invalid && formInfoUsuario.get('ap_materno')?.touched}" for="ap_materno" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellido Materno</label>
+                                <input [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': formInfoUsuario.get('ap_materno')?.invalid && formInfoUsuario.get('ap_materno')?.touched}" formControlName="ap_materno" name="ap_materno" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="García" required>
+                                <p *ngIf="formInfoUsuario.get('ap_materno')?.invalid && formInfoUsuario.get('ap_materno')?.touched" class="mt-2 text-sm text-red-600">
+                                    <span *ngIf="formInfoUsuario.get('ap_materno')?.errors?.['required']" class="font-medium">¡Ha sucedido un error! El apellido materno es requerido.</span>
+                                    <span *ngIf="formInfoUsuario.get('ap_materno')?.errors?.['minlength']" class="font-medium">¡Ha sucedido un error! El apellido materno debe tener al menos 3 caracteres.</span>
+                                </p>
                             </div>
 
                             <!--Sexo-->
