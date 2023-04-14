@@ -1,1 +1,48 @@
-<p>peticiones works!</p>
+<div class="relative overflow-x-auto w-full">
+    <h3 class="text-4xl font-light text-blue-600 pt-2 pb-6 pl-4">Peticiones de Reactivación</h3>
+
+    <!--Peticiones-->
+    <div class="flex flex-wrap">
+        <div class="basis-1/2" *ngFor="let peticion of peticiones">
+            <div class="border mx-3 mb-3 px-5 py-4 basis-1/2 bg-gray-100 rounded-xl">
+
+                <!--Numero y Fecha-->
+                <div class="flex mb-4">
+                    <div class="basis-1/2">
+                        <span class="text-gray-900 text-xl font-medium">Peticion N°{{peticion.id}}: <span class="text-blue-700">{{getUsuarioUsername(peticion.user_id)}}</span></span>
+                    </div>
+
+                    <div class="basis-1/2 text-end">
+                        <span class="text-gray-900 text-lg font-medium">Fecha de Solicitud: </span>
+                        <span class="px-3 py-2 bg-white rounded-lg border text-md">{{peticion.fecha}}</span>
+                    </div>
+                </div>
+
+                <!--Correo y Telefono-->
+                <div class="flex mb-2">
+                    <div class="basis-1/2">
+                        <span class="text-gray-900 text-lg font-medium">Correo: </span>
+                        <span class="px-3 py-2 bg-white rounded-lg border">{{getUsuarioCorreo(peticion.user_id)}}</span>
+                    </div>
+
+                    <div class="basis-1/2 text-end">
+                        <span class="text-gray-900 text-lg font-medium">Telefono: </span>
+                        <span class="px-3 py-2 bg-white rounded-lg border">{{getUsuarioTelefono(peticion.user_id)}}</span>
+                    </div>   
+                </div>
+
+                <!--Mensaje-->
+                <div>
+                    <span class="text-gray-900 text-lg font-medium">Mensaje: </span>
+                    <div class="px-3 py-2 bg-white rounded-lg border">{{peticion.mensaje}}</div>
+                </div>
+
+                <!--Botones-->
+                <div class="flex justify-end mt-3">
+                    <button class="px-3 py-2 text-xs font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300" (click)="denegarPeticion(peticion.id)">Rechazar</button>
+                    <button class="ml-2 px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300" (click)="aceptarPeticion(peticion.id)">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/Services/login.service';
+import { PeticionesService } from 'src/app/Services/peticiones.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,9 +10,12 @@ import { LoginService } from 'src/app/Services/login.service';
 })
 export class SidebarComponent implements OnInit {
 
-  constructor(private loginService: LoginService, private router: Router) { }
+  numPeticiones: number = 0;
+
+  constructor(private loginService: LoginService, private peticionesService: PeticionesService, private router: Router) { }
 
   ngOnInit(): void {
+    this.getPeticiones();
   }
 
   cambiarModo()
@@ -54,5 +58,14 @@ export class SidebarComponent implements OnInit {
   peticiones()
   {
     location.assign('/peticiones');
+  }
+
+  getPeticiones()
+  {
+    this.peticionesService.getPeticiones().subscribe(
+      response => {
+        this.numPeticiones = response.length;
+      }
+    );
   }
 }
