@@ -1,8 +1,16 @@
 <div class="relative overflow-x-auto w-full">
     <h3 class="text-4xl font-light text-blue-600 pt-2 pb-6 pl-4">Peticiones de Reactivación</h3>
 
+    <!--Lenght 0-->
+    <div [ngClass]="{'hidden': peticiones.length > 0}" class="container flex justify-center t-5">
+        <div class="px-4 py-3 basis-1/2">
+            <h1 class="text-center text-3xl font-medium mb-3">No hay peticiones pendientes</h1>
+            <p class="text-center text-lg">No hay peticiones pendientes en este momento. Por favor, revisa de nuevo más tarde para ver si aparecen nuevas peticiones.</p>
+        </div>
+    </div>
+
     <!--Peticiones-->
-    <div class="flex flex-wrap">
+    <div [ngClass]="{'hidden': peticiones.length <= 0}" class="flex flex-wrap">
         <div class="basis-1/2" *ngFor="let peticion of peticiones">
             <div class="border mx-3 mb-3 px-5 py-4 basis-1/2 bg-gray-100 rounded-xl">
 

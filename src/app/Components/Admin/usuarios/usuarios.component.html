@@ -1,6 +1,14 @@
 <div class="relative overflow-x-auto w-full">
     <h3 class="text-4xl font-light text-blue-600 pt-2 pb-6 pl-4">Lista de Usuarios</h3>
 
+    <!--Lenght 0-->
+    <div [ngClass]="{'hidden': usuarios.length > 0}" class="container flex justify-center t-5">
+        <div class="px-4 py-3 basis-1/2">
+            <h1 class="text-center text-3xl font-medium mb-3">No hay usuarios para mostrar</h1>
+            <p class="text-center text-lg">No hay usuarios registrados en este momento. Agrega un usuario o espera a que algun usuario sea registrada por otro usuario.</p>
+        </div>
+    </div>
+
     <table class="mx-3 w-full text-sm text-left text-blue-100">
         <thead class="text-xs text-black uppercase bg-blue-400 ">
             <tr>

@@ -76,7 +76,15 @@
         </div>
     </div>
 
-    <table class="mx-3 w-full text-sm text-left text-blue-100">
+    <!--Lenght 0-->
+    <div [ngClass]="{'hidden': usuarios.length > 0}" class="container flex justify-center t-5">
+        <div class="px-4 py-3 basis-1/2">
+            <h1 class="text-center text-3xl font-medium mb-3">No hay moderadores para mostrar</h1>
+            <p class="text-center text-lg">No hay moderadores registrados en este momento. Agrega un moderador para registrarlo en la base de datos.</p>
+        </div>
+    </div>
+
+    <table [ngClass]="{'hidden': usuarios.length <= 0}" class="mx-3 w-full text-sm text-left text-blue-100">
         <thead class="text-xs text-black uppercase bg-blue-400 ">
             <tr>
                 <th scope="col" class="px-6 py-3">
