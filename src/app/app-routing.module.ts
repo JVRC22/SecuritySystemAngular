@@ -6,16 +6,19 @@ import { ModeradoresComponent } from './Components/Admin/moderadores/moderadores
 import { TiendasComponent } from './Components/Admin/tiendas/tiendas.component';
 import { LoginComponent } from './Components/User/login/login.component';
 import { RegisterComponent } from './Components/User/Register/register/register.component';
-import { InvitadosComponent } from './Components/Admin/invitados/invitados.component';
 import { PeticionesComponent } from './Components/Admin/peticiones/peticiones.component';
 import { InfoPersonalComponent } from './Components/User/Register/info-personal/info-personal.component';
 import { PasswordComponent } from './Components/User/Register/password/password.component';
 import { PreguntaSeguridadComponent } from './Components/User/Register/pregunta-seguridad/pregunta-seguridad.component';
 import { BuscarUsuarioComponent } from './Components/Recuperacion/buscar-usuario/buscar-usuario.component';
 import { RecuperacionComponent } from './Components/Recuperacion/recuperacion/recuperacion.component';
+import { WelcomeComponent } from './Components/User/welcome/welcome.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/user', pathMatch: 'full' },
+  { path: '', redirectTo: '/welcome', pathMatch: 'full' },
+
+  //Home
+  { path: 'welcome', component:WelcomeComponent, title: 'Welcome' },
 
   //Loggueo
   { path: 'login', component:LoginComponent, title: 'Login' },
@@ -35,7 +38,6 @@ const routes: Routes = [
   { path: 'usuarios', component:UsuariosComponent },
   { path: 'moderadores', component:ModeradoresComponent },
   { path: 'tiendas', component:TiendasComponent },
-  { path: 'invitados', component:InvitadosComponent },
   { path: 'peticiones', component:PeticionesComponent },
 ];
 

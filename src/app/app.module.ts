@@ -22,7 +22,6 @@ import { ActivacionCuentaComponent } from './Components/User/Activation/activaci
 import { SolicitudAdminComponent } from './Components/User/Activation/solicitud-admin/solicitud-admin.component';
 import { NavbarComponent } from './Components/User/navbar/navbar.component';
 import { WelcomeComponent } from './Components/User/welcome/welcome.component';
-import { InvitadosComponent } from './Components/Admin/invitados/invitados.component';
 import { PeticionesComponent } from './Components/Admin/peticiones/peticiones.component';
 import { BuscarUsuarioComponent } from './Components/Recuperacion/buscar-usuario/buscar-usuario.component';
 import { RecuperacionComponent } from './Components/Recuperacion/recuperacion/recuperacion.component';
@@ -46,7 +45,6 @@ import { TokenInterceptor } from './Interceptors/token.interceptor';
     SolicitudAdminComponent,
     NavbarComponent,
     WelcomeComponent,
-    InvitadosComponent,
     PeticionesComponent,
     BuscarUsuarioComponent,
     RecuperacionComponent,
