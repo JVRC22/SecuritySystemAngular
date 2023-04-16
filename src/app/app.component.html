@@ -1,13 +1,13 @@
-<div [ngClass]="{'flex': role == 1}">
-  <div [hidden]="role != 1" [ngClass]="{'basis-1/6': role == 1}">
+<div [ngClass]="{'flex': role == 1 || role == 2}">
+  <div [hidden]="role == 3 || !role" [ngClass]="{'basis-1/6': role == 1 || role == 2}">
     <app-sidebar></app-sidebar>
   </div>
 
-  <div [hidden]="role == 1">
+  <div [hidden]="role == 1 || role == 2">
     <app-navbar></app-navbar>
   </div>
 
-  <div [ngClass]="{'basis-5/6': role == 1, 'ml-4': role != 1}" class="my-3 mr-4">
+  <div [ngClass]="{'basis-5/6': role == 1 || role == 2, 'ml-4': role == 3 || !role}" class="my-3 mr-4">
     <router-outlet></router-outlet>
   </div>
 

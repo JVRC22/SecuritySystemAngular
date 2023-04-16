@@ -34,6 +34,10 @@ export class UsersTiendasService {
   addInvitado(tienda_user: TiendaUser)
   {
     return this.http.post<TiendaUser>(this.url_api + "/tiendas/invitado", tienda_user)
+    .pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
   }
 
   deleteInvitados(id: number, invitados: number[])

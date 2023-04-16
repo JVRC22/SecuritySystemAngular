@@ -40,6 +40,24 @@ export class TiendasService {
     );
   }
 
+  updateTienda(id: number, tienda: Tienda): Observable<Tienda>
+  {
+    return this.http.put<Tienda>(this.url_api + "/tiendas/" + id, tienda)
+    .pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
+  deleteTienda(id: number): Observable<Tienda>
+  {
+    return this.http.delete<Tienda>(this.url_api + "/tiendas/" + id)
+    .pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
   //Error Handling
   private handleError(error: HttpErrorResponse)
   {
