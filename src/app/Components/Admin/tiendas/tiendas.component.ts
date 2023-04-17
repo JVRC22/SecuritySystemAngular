@@ -19,6 +19,7 @@ export class TiendasComponent implements OnInit {
   owners: TiendaUser[] = [];
   invitados: TiendaUser[] = [];
   users: User[] = [];
+  usersFaltantes: User[] = [];
 
   usuariosSeleccionados: number[] = [];
   sensoresSeleccionados: number[] = [];
@@ -31,6 +32,8 @@ export class TiendasComponent implements OnInit {
   invitado_id: number = 0;
 
   formModificarTienda: FormGroup;
+
+  tiendaActual: number = 0;
 
   constructor(private usersInvitacionesService: UsersTiendasService, private tiendasService: TiendasService, private adminService: AdminService, private router: Router, private fb: FormBuilder, private route: ActivatedRoute)
   {
@@ -65,6 +68,7 @@ export class TiendasComponent implements OnInit {
   {
     this.tiendasService.getTiendas().subscribe(
       data => {
+        console.log(data);
         this.tiendas = data;
       }
     );
@@ -88,8 +92,21 @@ export class TiendasComponent implements OnInit {
     );
   }
 
+  getFaltantes(id: number)
+  {
+    this.tiendaActual = id;
+
+    this.tiendasService.getFaltantes(id).subscribe(
+      data => {
+        this.usersFaltantes = data;
+      }
+    );
+  }
+
   getInvitados(id_tienda: number)
   {
+    console.log(id_tienda);
+
     this.usersInvitacionesService.getInvitados(id_tienda).subscribe(
       data => {
         this.invitados = data;
@@ -136,9 +153,11 @@ export class TiendasComponent implements OnInit {
   {
     tienda_user.tienda_id = id;
 
+    console.log(tienda_user);
+
     this.usersInvitacionesService.addInvitado(tienda_user).subscribe(
       response => {
-        location.reload();
+        //location.reload();
       },
       error => {
         alert("Error al agregar los usuarios");
@@ -161,6 +180,8 @@ export class TiendasComponent implements OnInit {
   //Gestion de Tiendas
   getTienda(id: number)
   {
+    this.tiendaActual = id;
+
     this.tiendasService.getTienda(id).subscribe(
       data => {
         this.formModificarTienda.patchValue(data);

@@ -243,7 +243,7 @@
                     <!--Agregar Invitado-->
                     <div class="mb-2">
                         <!--Boton Modal Agregar Invitado-->
-                        <button data-modal-target="add-invitado-modal" data-modal-toggle="add-invitado-modal" class="w-full px-3 py-2 text-xs font-medium text-center text-white bg-gray-400 rounded-lg hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-200">Añadir Invitado</button>
+                        <button (click)="getFaltantes(tienda.id)" data-modal-target="add-invitado-modal" data-modal-toggle="add-invitado-modal" class="w-full px-3 py-2 text-xs font-medium text-center text-white bg-gray-400 rounded-lg hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-200">Añadir Invitado</button>
 
                         <!--Modal Agregar Invitado-->
                         <div id="add-invitado-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -258,12 +258,12 @@
                                         <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Agregar Invitados</h3>
 
                                         <!--Formulario-->
-                                        <form class="space-y-6" [formGroup]="formAgregarInvitado" (ngSubmit)="addInvitado(tienda.id, formAgregarInvitado.value)">
+                                        <form class="space-y-6" [formGroup]="formAgregarInvitado" (ngSubmit)="addInvitado(tiendaActual, formAgregarInvitado.value)">
                                             <div>
                                                 <label [ngClass]="{'text-red-700': formAgregarInvitado.get('user_id')?.invalid && formAgregarInvitado.get('user_id')?.touched}" for="user_id" class="block mb-2 text-sm font-medium text-gray-900">Selecciona un usuario:</label>
-                                                <select [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': formAgregarInvitado.get('user_id')?.invalid && formAgregarInvitado.get('user_id')?.touched}" formControlName="user_id" name="user_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                                                <select [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': formAgregarInvitado.get('user_id')?.invalid && formAgregarInvitado.get('user_id')?.touched}" formControlName="user_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                                                     <option value="" selected disabled>Selecciona un usuario</option>
-                                                    <option *ngFor="let user of users" [value]="user.id">
+                                                    <option *ngFor="let user of usersFaltantes" [value]="user.id">
                                                         <span>{{user.id}}.- {{user.correo}}</span>
                                                     </option>
                                                 </select>
@@ -303,7 +303,7 @@
                                             <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Modificar Tienda</h3>
 
                                             <!--Formulario-->
-                                            <form class="space-y-6" [formGroup]="formModificarTienda" (ngSubmit)="updateTienda(tienda.id, formModificarTienda.value)">
+                                            <form class="space-y-6" [formGroup]="formModificarTienda" (ngSubmit)="updateTienda(tiendaActual, formModificarTienda.value)">
                                                 <!--Username-->
                                                 <div>
                                                     <label [ngClass]="{'text-red-700': formModificarTienda.get('nombre')?.invalid && formModificarTienda.get('nombre')?.touched}" for="nombre" class="block mb-2 text-sm font-medium text-gray-900">Nombre de Tienda</label>
@@ -339,7 +339,7 @@
                         <!--Eliminar Tienda-->
                         <div class="basis-1/2 ml-1">
                             <!--Boton Delete modal-->
-                            <button data-modal-target="delete-modal" data-modal-toggle="delete-modal" class="w-full px-3 py-2 text-xs font-medium text-center text-white bg-gray-400 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-200">Eliminar Tienda</button>
+                            <button (click)="tiendaActual = tienda.id" data-modal-target="delete-modal" data-modal-toggle="delete-modal" class="w-full px-3 py-2 text-xs font-medium text-center text-white bg-gray-400 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-200">Eliminar Tienda</button>
 
                             <!--Delete Modal-->
                             <div id="delete-modal" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -363,7 +363,7 @@
                                             <h3 class="mb-5 text-lg font-normal text-gray-500">¿Seguro que desea eliminar esta tienda?</h3>
 
                                             <!--Aceptar-->
-                                            <button (click)="deleteTienda(tienda.id)" data-modal-hide="delete-modal" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                                            <button (click)="deleteTienda(tiendaActual)" data-modal-hide="delete-modal" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
                                                 Sí, estoy seguro
                                             </button>
                                             

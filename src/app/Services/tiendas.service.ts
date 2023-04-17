@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError, retry, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Tienda } from '../Interfaces/tienda';
+import { User } from '../Interfaces/user';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,15 @@ export class TiendasService {
   getTienda(id: number): Observable<Tienda>
   {
     return this.http.get<Tienda>(this.url_api + "/tienda/" + id)
+    .pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
+  getFaltantes(id: number)
+  {
+    return this.http.get<User[]>(this.url_api + "/tiendas/invitados/guests/" + id)
     .pipe(
       retry(3),
       catchError(this.handleError)
