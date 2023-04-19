@@ -13,12 +13,18 @@ import { PreguntaSeguridadComponent } from './Components/User/Register/pregunta-
 import { BuscarUsuarioComponent } from './Components/Recuperacion/buscar-usuario/buscar-usuario.component';
 import { RecuperacionComponent } from './Components/Recuperacion/recuperacion/recuperacion.component';
 import { WelcomeComponent } from './Components/User/welcome/welcome.component';
+import { TokenGuard } from './Guards/token.guard';
+import { InfoCuentaComponent } from './Components/User/info-cuenta/info-cuenta.component';
+import { ActivacionCuentaComponent } from './Components/User/Activation/activacion-cuenta/activacion-cuenta.component';
+import { SolicitudAdminComponent } from './Components/User/Activation/solicitud-admin/solicitud-admin.component';
+import { StatusGuard } from './Guards/status.guard';
+import { CambiarPasswordComponent } from './Components/Recuperacion/cambiar-password/cambiar-password.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/welcome', pathMatch: 'full' },
 
   //Home
-  { path: 'welcome', component:WelcomeComponent, title: 'Welcome' },
+  { path: 'welcome', component:WelcomeComponent, title: 'Bienvenido a ShopShield' },
 
   //Loggueo
   { path: 'login', component:LoginComponent, title: 'Login' },
@@ -28,11 +34,18 @@ const routes: Routes = [
   { path: 'password', component:PasswordComponent, title: 'Register' },
   { path:'pregunta_recuperacion', component:PreguntaSeguridadComponent, title: 'Register' },
 
+  //Activacion de Cuentas
+  { path: 'activacion', component:ActivacionCuentaComponent, title: 'Activacion' },
+  { path: 'solicitud', component:SolicitudAdminComponent, title: 'Activacion' },
+
+  //Recuperacion de Cuentas
   { path: 'buscar_usuario', component:BuscarUsuarioComponent, title: 'Recuperacion' },
   { path: 'recuperacion', component:RecuperacionComponent, title: 'Recuperacion' },
+  { path: 'cambiar_password', component:CambiarPasswordComponent, title: 'Recuperacion' },
 
   //Usuarios
-  { path: 'home', component:HomeComponent },
+  { path: 'home', component:HomeComponent, canActivate: [TokenGuard, StatusGuard] },
+  { path: 'info', component:InfoCuentaComponent, canActivate: [] },
 
   //Administradores
   { path: 'usuarios', component:UsuariosComponent },

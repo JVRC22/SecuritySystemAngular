@@ -32,12 +32,12 @@ export class LoginComponent implements OnInit {
       (response: any) => {
         localStorage.setItem('id', response.id);
         localStorage.setItem('username', response.username);
+        localStorage.setItem('email', response.email);
         localStorage.setItem('token', response.token.token);
         localStorage.setItem('role', response.role);
-        this.router.navigate(['/home']);
+        location.assign('/home');
       },
       error => {
-        console.log(error);
         this.invalido = true;
         this.apiFailed = true;
       }

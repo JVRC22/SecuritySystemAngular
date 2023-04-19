@@ -21,8 +21,7 @@
     "flowbite": "^1.6.4",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.12.0",
-    "@flowbitedesign/ui": "github:Flowbite/design-system"
+    "zone.js": "~0.12.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^15.2.4",

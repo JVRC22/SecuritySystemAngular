@@ -1,0 +1,140 @@
+<div class="flex justify-center my-8">
+    <div class="basis-1/2 bg-gray-100 border border-gray-300 border-2 rounded-lg">
+        <div class="bg-blue-400 border-0 border-gray-300 border-b-2 rounderd-lg" style="height: 150px;">
+            <div class="ml-6">
+                <img class="rounded-full border border-2 border-gray-300 basis-auto" style="max-width: 200px; max-height: 200px; transform: translateY(25%);" src="../../../../assets/toby.jpeg" alt="foto-perfil">
+            </div>
+        </div>
+
+        <!--Info Cuenta-->
+        <div class="flex justify-end bg-gray-100">
+            <div class="basis-2/3 bg-white border border-2 border-gray-300 rounded-lg px-6 py-4 mr-4" style="transform: translateY(-25%);">
+                <!--Titulo-->
+                <div>
+                    <span class="text-xl font-medium">Informacion de Cuenta</span>
+                </div>
+                <!--Formulario-->
+                <div class="mt-2"> 
+                    <form [formGroup]="formInfoCuenta">
+                        <div class="mb-6">
+                            <label for="username" class="block mb-2 text-sm font-medium text-gray-900">Nombre de Usuario</label>
+                            <input formControlName="username" type="text" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Username">
+                        </div>
+
+                        <div class="mb-6">
+                            <label for="correo" class="block mb-2 text-sm font-medium text-gray-900">Correo Electronico</label>
+                            <input formControlName="correo" type="email" id="correo" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="correo@gmail.com" readonly>
+                        </div>
+
+                        <div class="mb-2">
+                            <label for="telefono" class="block mb-2 text-sm font-medium text-gray-900">Numero de Telefono</label>
+                            <input formControlName="telefono" type="number" id="telefono" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="8711210000" readonly>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!--Info Personal-->
+        <div class="mt-4 mx-4 px-6 py-4 bg-white border border-2 border-gray-300 rounded-lg" style="transform: translateY(-20%);">
+            <!--Titulo-->
+            <div>
+                <span class="text-xl font-medium">Informacion de Usuario</span>
+            </div>
+
+            <!--Formulario-->
+            <div class="mt-2">
+                <form [formGroup]="formInfoUsuario">
+                    <div class="flex">
+                        <!--Nombre-->
+                        <div class="mb-6 basis-1/2 mr-2">
+                            <label for="nombre" class="block mb-2 text-sm font-medium text-gray-900">Nombre </label>
+                            <input formControlName="nombre" type="text" id="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Juan Jose">
+                        </div>
+    
+                        <!--Apellido Paterno-->
+                        <div class="mb-6 basis-1/2 ml-2">
+                            <label for="ap_paterno" class="block mb-2 text-sm font-medium text-gray-900">Apellido Paterno</label>
+                            <input formControlName="ap_paterno" type="text" id="ap_paterno" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Gonzales">
+                        </div>
+                    </div>
+    
+                    <div class="flex">
+                        <!--Apellido Materno-->
+                        <div class="mb-6 basis-1/2 mr-2">
+                            <label for="ap_materno" class="block mb-2 text-sm font-medium text-gray-900">Apellido Paterno</label>
+                            <input formControlName="ap_materno" type="text" id="ap_materno" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Garcia">
+                        </div>
+    
+                        <!--Sexo-->
+                        <div class="mb-6 basis-1/2 ml-2">
+                            <label for="sexo" class="block mb-2 text-sm font-medium text-gray-900">Sexo</label>
+                            <select formControlName="sexo" id="sexo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                <option value="" disabled>Seleccione una opción</option>
+                                <option value="Masculino">Masculino</option>
+                                <option value="Femenino">Femenino</option>
+                            </select>
+                        </div>
+                    </div>
+    
+                    <div class="flex">
+                        <!--Apellido Materno-->
+                        <div class="basis-1/2 mr-2">
+                            <label for="fecha_nacimiento" class="block mb-2 text-sm font-medium text-gray-900">Fecha de Nacimiento</label>
+                            <input formControlName="fecha_nacimiento" type="date" id="fecha_nacimiento" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        </div>
+    
+                        <!--Sexo-->
+                        <div class="basis-1/2 self-end mb-px text-end">
+                            <button [disabled]="formInfoUsuario.invalid" type="submit" [ngClass]="{'hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300': !formInfoUsuario.invalid, 'bg-blue-300': formInfoUsuario.invalid}" class="text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Modificar Información</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!--Cambiar Password-->
+        <div class="flex bg-gray-100 px-4 pt-4">
+            <div class="basis-1/2 bg-white border border-2 border-gray-300 rounded-lg px-6 py-4 mr-2" style="transform: translateY(-15%);">
+                <!--Titulo-->
+                <div>
+                    <span class="text-xl font-medium">Cambiar Contraseña</span>
+                </div>
+                <!--Formulario-->
+                <div class="mt-2"> 
+                    <form [formGroup]="formCambiarPassword">
+                        <div class="mb-6">
+                            <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Contraseña Actual</label>
+                            <input formControlName="password" type="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="••••••••">
+                        </div>
+
+                        <div class="mb-6">
+                            <label for="new-_password" class="block mb-2 text-sm font-medium text-gray-900">Nueva Contraseña</label>
+                            <input formControlName="new_password" type="password" id="new_password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="••••••••">
+                        </div>
+
+                        <div class="mb-6">
+                            <label for="repeat_new_password" class="block mb-2 text-sm font-medium text-gray-900">Nueva Contraseña</label>
+                            <input formControlName="repeat_new_password" type="password" id="repeat_new_password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="••••••••">
+                        </div>
+
+                        <div class="text-end">
+                            <button [disabled]="formCambiarPassword.invalid" type="submit" [ngClass]="{'hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300': !formCambiarPassword.invalid, 'bg-blue-300': formCambiarPassword.invalid}" class="text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Cambiar Contraseña</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="basis-1/2 bg-white border border-2 border-gray-300 rounded-lg px-6 py-4 ml-2" style="transform: translateY(-15%);">
+                <!--Titulo-->
+                <div>
+                    <span class="text-xl font-medium">Mis Tiendas</span>
+                </div>
+                <!--Formulario-->
+                <div class="mt-2"> 
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

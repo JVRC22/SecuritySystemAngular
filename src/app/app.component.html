@@ -1,19 +1,13 @@
 <div [ngClass]="{'flex': role == 1 || role == 2}">
-  <div [hidden]="role == 3 || !role" [ngClass]="{'basis-1/6': role == 1 || role == 2}">
+  <div *ngIf="role == 1 || role == 2" [ngClass]="{'basis-1/6': role == 1 || role == 2}">
     <app-sidebar></app-sidebar>
   </div>
 
-  <div [hidden]="role == 1 || role == 2">
+  <div *ngIf="role == 3 || !role">
     <app-navbar></app-navbar>
   </div>
 
   <div [ngClass]="{'basis-5/6': role == 1 || role == 2, 'ml-4': role == 3 || !role}" class="my-3 mr-4">
     <router-outlet></router-outlet>
-  </div>
-
-  <div hidden>
-    <footer class="fixed bottom-0 left-0 z-20 w-full p-4 bg-white border-t border-gray-200 shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800 dark:border-gray-600">
-      <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a class="hover:underline">ShopShield™</a>. All Rights Reserved.</span>
-    </footer>
   </div>
 </div>

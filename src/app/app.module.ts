@@ -26,6 +26,8 @@ import { PeticionesComponent } from './Components/Admin/peticiones/peticiones.co
 import { BuscarUsuarioComponent } from './Components/Recuperacion/buscar-usuario/buscar-usuario.component';
 import { RecuperacionComponent } from './Components/Recuperacion/recuperacion/recuperacion.component';
 import { TokenInterceptor } from './Interceptors/token.interceptor';
+import { InfoCuentaComponent } from './Components/User/info-cuenta/info-cuenta.component';
+import { CambiarPasswordComponent } from './Components/Recuperacion/cambiar-password/cambiar-password.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,8 @@ import { TokenInterceptor } from './Interceptors/token.interceptor';
     PeticionesComponent,
     BuscarUsuarioComponent,
     RecuperacionComponent,
+    InfoCuentaComponent,
+    CambiarPasswordComponent,
   ],
   imports: [
     BrowserModule,

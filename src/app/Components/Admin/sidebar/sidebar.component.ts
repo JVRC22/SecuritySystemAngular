@@ -27,7 +27,7 @@ export class SidebarComponent implements OnInit {
     {
       this.loginService.logout().subscribe(response => {
         localStorage.clear();
-        this.router.navigate(['/home']);
+        location.assign('/welcome');
       },
       error => {
         console.log(error);
