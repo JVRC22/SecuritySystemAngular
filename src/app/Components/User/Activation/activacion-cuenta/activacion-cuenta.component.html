@@ -1,1 +1,97 @@
-<p>activacion-cuenta works!</p>
+<div class="flex justify-center my-8">
+    <div class="basis-1/2 bg-gray-100 border border-gray-300 border-2 rounded-lg">
+        <!--Sticky Banner-->
+        <div id="activacion-banner" tabindex="-1" class="shadow fixed z-50 flex flex-col md:flex-row justify-between w-[calc(100%-2rem)] p-4 -translate-x-1/2 bg-white border border-gray-100 rounded-lg shadow-sm lg:max-w-7xl left-1/2 top-6 dark:bg-gray-700 dark:border-gray-600">
+            <!--Mensaje-->
+            <div class="flex flex-col items-start mb-3 mr-4 md:items-center md:flex-row md:mb-0">
+                <a class="flex items-center mb-2 border-gray-200 md:pr-4 md:mr-4 md:border-r md:mb-0 dark:border-gray-600">
+                    <img src="../../../../../assets/escudo.svg" class="mr-2" alt="logo" style="max-width: 32px; max-height: 32px;">
+                    <span class="self-center text-lg font-semibold whitespace-nowrap">ShopShield</span>
+                </a>
+                <p class="flex items-center text-sm font-normal text-gray-500 dark:text-gray-400">Tu cuenta no ha sido activada, completa el proceso de activación para poder ingresar.</p>
+            </div>
+
+            <!--Boton Cerrar-->
+            <div class="flex items-center flex-shrink-0">
+                <button data-dismiss-target="#activacion-banner" type="button" class="absolute top-2.5 right-2.5 md:relative md:top-auto md:right-auto flex-shrink-0 inline-flex justify-center items-center text-gray-400 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 dark:hover:bg-gray-600 dark:hover:text-white">
+                    <svg aria-hidden="true" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    <span class="sr-only">Close banner</span>
+                </button>
+            </div>
+        </div>
+
+        <!--Card-->
+        <div class="flex bg-gray-100">
+            <!--Logo-->
+            <div class="basis-1/3 px-6 py-4 flex justify-center items-center">
+                <div class="basis-auto">
+                    <img src="../../../../assets/escudo.svg" class="" alt="escudo" style="max-height: 240px; max-width: 240px;">
+                    <div class="text-center text-4xl font-semibold">
+                        ShopShield
+                    </div>
+                </div>
+            </div>
+
+            <!--Card-->
+            <div class="basis-2/3 bg-white border border-2 border-gray-300 rounded-lg px-6 py-4 my-5 mx-4">
+                <!--Logo-->
+                <div class="flex items-center justify-end">
+                    <img src="../../../../assets/escudo.svg" alt="logo" class="mr-1" style="max-width: 24px; max-height: 24px;">
+                    <span class="self-center text-lg font-semibold whitespace-nowrap">ShopShield</span>
+                </div>
+
+                <!-- Título -->
+                <div class="mb-3">
+                    <span class="text-2xl font-semibold">Activa tu Cuenta</span>
+                </div>
+
+                <!--Mensaje-->
+                <div class="mb-6">
+                    <span class="text-md text-justify">
+                        ¡Bienvenido a ShopShield! Agradecemos tu preferencia y confianza en nuestro servicio de seguridad. Para activar tu cuenta, por favor sigue las instrucciones que hemos enviado a tu correo electrónico asociado. Si tienes alguna pregunta o necesitas ayuda, no dudes en contactarnos. ¡Gracias de nuevo por unirte a ShopShield!
+                    </span>
+                </div>
+    
+                <!-- Formulario -->
+                <div class="mb-2">
+                    <form [formGroup]="formCode" (ngSubmit)="onSubmit(formCode.value)">
+                        <div class="flex">
+                            <div class="basis-1/2 mt-2">
+                                <label [ngClass]="{'text-red-700': formCode.get('codigo_verificacion')?.invalid && formCode.get('codigo_verificacion')?.touched || invalido}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Codigo de Verificación</label>
+                                <input formControlName="codigo_verificacion" [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': formCode.get('codigo_verificacion')?.invalid && formCode.get('codigo_verificacion')?.touched || invalido}" type="number" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50" min="0" max="9999">
+                                <p *ngIf="formCode.get('codigo_verificacion')?.invalid && formCode.get('codigo_verificacion')?.touched" class="mt-2 text-sm text-red-600">
+                                    <span *ngIf="formCode.get('codigo_verificacion')?.errors?.['required']" class="text-xs font-medium">¡Ha sucedido un error! El codigo es requerido.</span>
+                                </p>
+                            </div>
+                            
+                            <div class="basis-1/2 mt-9 pt-0.5 ml-2 pb-1">
+                                <button [disabled]="formCode.invalid" [ngClass]="{'button-failed': apiFailed, 'hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300': !formCode.invalid, 'bg-blue-300': formCode.invalid}" (animationend)="onAnimationEnd()" type="submit" class="px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg">Verificar Codigo</button>
+                            </div>
+                        </div>
+
+                        <div class="mt-2">
+                            <div class="mt-2 text-sm font-medium text-gray-500">
+                                ¿No recibiste ningún código?
+                                <a (click)="reenviarCodigo()" class="text-blue-700 hover:underline dark:text-blue-500 a-link">Reenviar Código</a>
+                            </div>
+
+                            <!--Mensaje Error-->
+                            <div [ngClass]="{'hidden': invalido == false}" id="mensaje-error" class="flex p-4 mt-2 mb-4 text-red-800 rounded-lg bg-red-50 " role="alert">
+                                <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                                <span class="sr-only">Info</span>
+                                <div class="ml-3 text-sm font-medium">
+                                    El codigo de verificacion no es valido.
+                                </div>
+                                <button (click)="invalido = false" class="ml-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700">
+                                    <span class="sr-only">Dismiss</span>
+                                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  

@@ -3,6 +3,7 @@ export interface User {
     username: string;
     correo: string;
     password: string;
+    new_password: string;
     telefono: number;
     estatus: number;
     codigo_verificacion: number;

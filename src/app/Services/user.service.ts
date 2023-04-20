@@ -23,6 +23,62 @@ export class UserService {
     );
   }
 
+  buscarUsuario(user: User)
+  {
+    return this.http.post<User>(this.url_api + "/user/email/phone", user)
+    .pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
+  recuperacionRepuesta(info_usuario: InfoUsuario)
+  {
+    return this.http.post<User>(this.url_api + "/user/pregunta/answer", info_usuario)
+    .pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
+  updatePassword(user: User)
+  {
+    return this.http.put<User>(this.url_api + "/user/update/password", user)
+    .pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
+  updateMyPassword(user: User)
+  {
+    return this.http.put<User>(this.url_api + "/user/update/password/auth", user)
+    .pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
+  verifyCode(id: number, user: User)
+  {
+    const dict = {codigo_verificacion: String(user.codigo_verificacion)}
+
+    return this.http.put<User>(this.url_api + "/receive/code/" + id, dict)
+    .pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
+  getMyPregunta(id: number)
+  {
+    return this.http.get(this.url_api + "/user/pregunta/" + id)
+    .pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
   getMyInfoUsuario()
   {
     return this.http.get<User>(this.url_api + "/users/info")

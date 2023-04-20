@@ -7,8 +7,7 @@ import { interval } from 'rxjs';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'SecuritySystemAngular';
-
+  
   role: number = Number(localStorage.getItem('role'));
 
   ngOnInit(): void {

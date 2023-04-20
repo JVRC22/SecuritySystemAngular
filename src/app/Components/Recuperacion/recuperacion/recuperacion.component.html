@@ -78,7 +78,7 @@
                                             <div class="ml-3 text-sm font-medium">
                                                 El codigo de verificacion no es valido.
                                             </div>
-                                            <button (click)="invalido = false" class="ml-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700"  data-dismiss-target="#alert-border-2" aria-label="Close">
+                                            <button (click)="invalido = false" class="ml-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700">
                                                 <span class="sr-only">Dismiss</span>
                                                 <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                                             </button>
@@ -131,7 +131,7 @@
                                             <div class="ml-3 text-sm font-medium">
                                                 El codigo de verificacion no es valido.
                                             </div>
-                                            <button (click)="invalido = false" class="ml-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700"  data-dismiss-target="#alert-border-2" aria-label="Close">
+                                            <button (click)="invalido = false" class="ml-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700">
                                                 <span class="sr-only">Dismiss</span>
                                                 <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                                             </button>
@@ -155,34 +155,39 @@
                             <span class="mb-2 text-gray-500">Responde correctamente la pregunta de recuperación que está asociada a la cuenta:</span>
 
                             <div class="mt-2">
-                                <form [formGroup]="formRespuesta" (ngSubmit)="onSubmitCode(formRespuesta.value)">
+                                <form [formGroup]="formRespuesta" (ngSubmit)="onSubmitRespuesta(formRespuesta.value)">
                                     <div class="">
-                                        <div class="mt-2">
+                                        <!--Pregunta-->
+                                        <div class="mt-4">
+                                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pregunta de Recuperacion</label>
+                                            <input formControlName="pregunta" type="text" class="block w-full py-2 px-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50" readonly>
+                                        </div>
+
+                                        <!--Respuesta-->
+                                        <div class="mt-4">
                                             <label [ngClass]="{'text-red-700': formRespuesta.get('respuesta')?.invalid && formRespuesta.get('respuesta')?.touched || invalido}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Respuesta</label>
                                             <input formControlName="respuesta" [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': formRespuesta.get('respuesta')?.invalid && formRespuesta.get('respuesta')?.touched || invalido}" type="text" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50" required>
                                             <p *ngIf="formRespuesta.get('respuesta')?.invalid && formRespuesta.get('respuesta')?.touched" class="mt-2 text-sm text-red-600">
                                                 <span *ngIf="formRespuesta.get('respuesta')?.errors?.['required']" class="text-xs font-medium">¡Ha sucedido un error! La respuesta es requerida.</span>
                                             </p>
                                         </div>
-                                        
-                                        <div class="mt-9 pt-0.5 ml-2 pb-1">
-                                            <button (click)="enviarCodigo2()" *ngIf="!enviado2" [ngClass]="{'button-failed': apiFailed}" (animationend)="onAnimationEnd()" type="submit" class="px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">Enviar Codigo</button>
-                                            <button *ngIf="enviado2" [disabled]="formCode2.invalid" [ngClass]="{'button-failed': apiFailed, 'hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300': !formCode2.invalid, 'bg-blue-300': formCode2.invalid}" (animationend)="onAnimationEnd()" type="submit" class="px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg">Verificar Codigo</button>
-                                        </div>
-                                    </div>
 
-                                    <div class="mt-2">
                                         <!--Mensaje Error-->
-                                        <div [ngClass]="{'hidden': invalido == false}" id="mensaje-error" class="flex p-4 mb-4 text-red-800 rounded-lg bg-red-50 " role="alert">
+                                        <div [ngClass]="{'hidden': invalido == false}" id="mensaje-error" class="flex p-4 mt-2 mb-4 text-red-800 rounded-lg bg-red-50 " role="alert">
                                             <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
                                             <span class="sr-only">Info</span>
                                             <div class="ml-3 text-sm font-medium">
-                                                El codigo de verificacion no es valido.
+                                                La respuesta es incorrecta.
                                             </div>
-                                            <button (click)="invalido = false" class="ml-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700"  data-dismiss-target="#alert-border-2" aria-label="Close">
+                                            <button (click)="invalido = false" class="ml-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700">
                                                 <span class="sr-only">Dismiss</span>
                                                 <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                                             </button>
+                                        </div>
+                                        
+                                        <!--Boton-->
+                                        <div class="mt-4 text-end">
+                                            <button [disabled]="formRespuesta.invalid" [ngClass]="{'button-failed': apiFailed, 'hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300': !formRespuesta.invalid, 'bg-blue-300': formRespuesta.invalid}" (animationend)="onAnimationEnd()" type="submit" class="px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg">Revisar Respuesta</button>
                                         </div>
                                     </div>
                                 </form>

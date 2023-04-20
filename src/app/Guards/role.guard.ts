@@ -12,7 +12,7 @@ export class RoleGuard implements CanActivate {
 
   constructor(private router:Router, private userService: UserService) { }
 
-  async canActivate(route: ActivatedRouteSnapshot,state: RouterStateSnapshot): Promise<boolean | UrlTree> 
+  async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean | UrlTree> 
   {
     const roles = route.data['expectedRole'];
     let rol = this.rol;
@@ -32,6 +32,7 @@ export class RoleGuard implements CanActivate {
         }
 
         alert("No tienes permisos para acceder a esta pagina");
+        this.router.navigate(['/welcome']);
         return false;
       } 
       
@@ -44,7 +45,7 @@ export class RoleGuard implements CanActivate {
     catch(error) 
     {
       alert("No tienes permisos para acceder a esta pagina");
-      console.log(error);
+      this.router.navigate(['/welcome']);
       return false;
     }
   }

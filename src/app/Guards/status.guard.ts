@@ -8,7 +8,6 @@ import { UserService } from '../Services/user.service';
 })
 export class StatusGuard implements CanActivate {
   status!: number;
-  role!: number;
 
   constructor(private usuarioService: UserService, private router: Router) { }
 
@@ -16,22 +15,19 @@ export class StatusGuard implements CanActivate {
   {
     const data: any = await this.usuarioService.verifiyToken().toPromise();
     this.status = data.user_estatus;
-    this.role = data.user_rol;
 
     if (this.status == 0) 
     {
-      alert("Tu cuenta no ha sido activada, completa el proceso de activación para poder ingresar.");
       localStorage.removeItem('token');
       localStorage.removeItem('username');
       localStorage.removeItem('email');
       localStorage.removeItem('role');
-      this.router.navigate(['/activacion']);
+      location.assign('/activacion');
       return false;
     }
 
     else if (this.status == 1) 
     {
-      alert("Tu cuenta ha sido desactivada, contacta con el administrador.");
       localStorage.removeItem('token');
       localStorage.removeItem('email');
       localStorage.removeItem('role');
@@ -41,22 +37,12 @@ export class StatusGuard implements CanActivate {
 
     else if (this.status == 2) 
     {
-      if (this.role == 1 || this.role == 2)
-      {
-        location.assign('/usuarios');
-      }
-
-      else if (this.role == 3)
-      {
-        this.router.navigate(['/home']);
-      }
-        
-      return false;
+      return true;
     } 
 
     else 
     {
-      return true;
+      return false;
     }
   }
 }

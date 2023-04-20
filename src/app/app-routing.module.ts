@@ -19,6 +19,7 @@ import { ActivacionCuentaComponent } from './Components/User/Activation/activaci
 import { SolicitudAdminComponent } from './Components/User/Activation/solicitud-admin/solicitud-admin.component';
 import { StatusGuard } from './Guards/status.guard';
 import { CambiarPasswordComponent } from './Components/Recuperacion/cambiar-password/cambiar-password.component';
+import { RoleGuard } from './Guards/role.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/welcome', pathMatch: 'full' },
@@ -27,31 +28,31 @@ const routes: Routes = [
   { path: 'welcome', component:WelcomeComponent, title: 'Bienvenido a ShopShield' },
 
   //Loggueo
-  { path: 'login', component:LoginComponent, title: 'Login' },
+  { path: 'login', component:LoginComponent, title: 'Iniciar Sesion - ShopShield' },
 
-  { path: 'register', component:RegisterComponent, title: 'Register' },
-  { path: 'info_personal', component:InfoPersonalComponent, title: 'Register' },
-  { path: 'password', component:PasswordComponent, title: 'Register' },
-  { path:'pregunta_recuperacion', component:PreguntaSeguridadComponent, title: 'Register' },
+  { path: 'register', component:RegisterComponent, title: 'Registrate - ShopShield' },
+  { path: 'info_personal', component:InfoPersonalComponent, title: 'Registrate - ShopShield' },
+  { path: 'password', component:PasswordComponent, title: 'Registrate - ShopShield' },
+  { path:'pregunta_recuperacion', component:PreguntaSeguridadComponent, title: 'Registrate - ShopShield' },
 
   //Activacion de Cuentas
-  { path: 'activacion', component:ActivacionCuentaComponent, title: 'Activacion' },
-  { path: 'solicitud', component:SolicitudAdminComponent, title: 'Activacion' },
+  { path: 'activacion', component:ActivacionCuentaComponent, title: 'Activa tu Cuenta - ShopShield' },
+  { path: 'solicitud', component:SolicitudAdminComponent, title: 'Reactiva tu Cuenta - ShopShield' },
 
   //Recuperacion de Cuentas
-  { path: 'buscar_usuario', component:BuscarUsuarioComponent, title: 'Recuperacion' },
-  { path: 'recuperacion', component:RecuperacionComponent, title: 'Recuperacion' },
-  { path: 'cambiar_password', component:CambiarPasswordComponent, title: 'Recuperacion' },
+  { path: 'buscar_usuario', component:BuscarUsuarioComponent, title: 'Recupera tu Cuenta - ShopShield' },
+  { path: 'recuperacion', component:RecuperacionComponent, title: 'Recupera tu Cuenta - ShopShield' },
+  { path: 'cambiar_password', component:CambiarPasswordComponent, title: 'Recupera tu Cuenta - ShopShield' },
 
   //Usuarios
-  { path: 'home', component:HomeComponent, canActivate: [TokenGuard, StatusGuard] },
-  { path: 'info', component:InfoCuentaComponent, canActivate: [] },
+  { path: 'home', component:HomeComponent, canActivate: [StatusGuard, TokenGuard, RoleGuard], data: { expectedRole: ['3']}, title: 'Home - ShopShield' },
+  { path: 'info', component:InfoCuentaComponent, canActivate: [StatusGuard, TokenGuard, RoleGuard], data: { expectedRole: ['3']}, title: 'Informacion de Cuenta - ShopShield' },
 
   //Administradores
-  { path: 'usuarios', component:UsuariosComponent },
-  { path: 'moderadores', component:ModeradoresComponent },
-  { path: 'tiendas', component:TiendasComponent },
-  { path: 'peticiones', component:PeticionesComponent },
+  { path: 'usuarios', component:UsuariosComponent, canActivate: [TokenGuard, StatusGuard, RoleGuard], data: { expectedRole: ['1','2']}, title: 'Usuarios - ShopShield' },
+  { path: 'moderadores', component:ModeradoresComponent, canActivate: [TokenGuard, StatusGuard, RoleGuard], data: { expectedRole: ['1','2']}, title: 'Moderadores - ShopShield' },
+  { path: 'tiendas', component:TiendasComponent, canActivate: [TokenGuard, StatusGuard, RoleGuard], data: { expectedRole: ['1','2']}, title: 'Tiendas - ShopShield' },
+  { path: 'peticiones', component:PeticionesComponent, canActivate: [TokenGuard, StatusGuard, RoleGuard], data: { expectedRole: ['1','2']}, title: 'Peticiones - ShopShield' },
 ];
 
 @NgModule({

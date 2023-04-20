@@ -35,7 +35,16 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('email', response.email);
         localStorage.setItem('token', response.token.token);
         localStorage.setItem('role', response.role);
-        location.assign('/home');
+        
+        if (response.role == 1 || response.role == 2)
+        {
+          location.assign('/usuarios');
+        }
+
+        else if (response.role == 3)
+        {
+          location.assign('/home');
+        }
       },
       error => {
         this.invalido = true;
