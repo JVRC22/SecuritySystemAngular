@@ -28,6 +28,8 @@ import { RecuperacionComponent } from './Components/Recuperacion/recuperacion/re
 import { TokenInterceptor } from './Interceptors/token.interceptor';
 import { InfoCuentaComponent } from './Components/User/info-cuenta/info-cuenta.component';
 import { CambiarPasswordComponent } from './Components/Recuperacion/cambiar-password/cambiar-password.component';
+import { SensoresComponent } from './Components/User/sensores/sensores.component';
+import { InvitacionesComponent } from './Components/User/invitaciones/invitaciones.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +54,8 @@ import { CambiarPasswordComponent } from './Components/Recuperacion/cambiar-pass
     RecuperacionComponent,
     InfoCuentaComponent,
     CambiarPasswordComponent,
+    SensoresComponent,
+    InvitacionesComponent,
   ],
   imports: [
     BrowserModule,

@@ -157,7 +157,7 @@ export class TiendasComponent implements OnInit {
 
     this.usersInvitacionesService.addInvitado(tienda_user).subscribe(
       response => {
-        //location.reload();
+        location.reload();
       },
       error => {
         alert("Error al agregar los usuarios");

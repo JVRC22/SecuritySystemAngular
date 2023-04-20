@@ -26,7 +26,27 @@ export class NavbarComponent {
   {
     this.getData()
     return !!localStorage.getItem('token');
-  }  
+  }
+
+  usuarios()
+  {
+    location.assign('/usuarios');
+  }
+
+  moderadores()
+  {
+    location.assign('/moderadores');
+  }
+
+  tiendas()
+  {
+    location.assign('/tiendas');
+  }
+
+  peticiones()
+  {
+    location.assign('/peticiones');
+  }
 
   login()
   {
@@ -40,9 +60,6 @@ export class NavbarComponent {
       this.loginService.logout().subscribe(response => {
         localStorage.clear();
         location.assign('/welcome');
-      },
-      error => {
-        console.log(error);
       });
     }
   }

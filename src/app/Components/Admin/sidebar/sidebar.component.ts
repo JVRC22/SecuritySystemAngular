@@ -50,11 +50,6 @@ export class SidebarComponent implements OnInit {
     location.assign('/tiendas');
   }
 
-  invitados()
-  {
-    location.assign('/invitados');
-  }
-
   peticiones()
   {
     location.assign('/peticiones');
