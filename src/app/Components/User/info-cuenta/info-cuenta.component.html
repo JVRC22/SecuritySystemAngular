@@ -1,24 +1,32 @@
 <div class="flex justify-center my-8">
     <div class="basis-1/2 bg-gray-100 border border-gray-300 border-2 rounded-lg">
         <div class="bg-blue-400 border-0 border-gray-300 border-b-2 rounderd-lg" style="height: 150px;">
-            <div class="ml-6">
-                <img class="rounded-full border border-2 border-gray-300 basis-auto" style="max-width: 200px; max-height: 200px; transform: translateY(25%);" src="../../../../assets/toby.jpeg" alt="foto-perfil">
-            </div>
         </div>
 
         <!--Info Cuenta-->
         <div class="flex justify-end bg-gray-100">
+            <div class="basis-1/3 bg-white border border-2 border-gray-300 rounded-lg px-6 py-4 mx-4" style="transform: translateY(-25%);">
+                <div class="flex justify-center items-center h-full">
+                    <img class="rounded-full border border-2 border-gray-300 basis-auto" style="max-width: 200px; max-height: 200px;" src="../../../../assets/toby.jpeg" alt="foto-perfil">
+                </div>
+            </div>
+
             <div class="basis-2/3 bg-white border border-2 border-gray-300 rounded-lg px-6 py-4 mr-4" style="transform: translateY(-25%);">
                 <!--Titulo-->
                 <div>
                     <span class="text-xl font-medium">Informacion de Cuenta</span>
                 </div>
+
                 <!--Formulario-->
                 <div class="mt-2"> 
-                    <form [formGroup]="formInfoCuenta">
+                    <form [formGroup]="formInfoCuenta" (ngSubmit)="updateMyInfoCuenta(formInfoCuenta.value)">
                         <div class="mb-6">
-                            <label for="username" class="block mb-2 text-sm font-medium text-gray-900">Nombre de Usuario</label>
-                            <input formControlName="username" type="text" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Username">
+                            <label [ngClass]="{'text-red-700': formInfoCuenta.get('username')?.invalid && formInfoCuenta.get('username')?.touched || invalido2}" for="username" class="block mb-2 text-sm font-medium text-gray-900">Nombre de Usuario</label>
+                            <input [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': formInfoCuenta.get('username')?.invalid && formInfoCuenta.get('username')?.touched || invalido2}" formControlName="username" type="text" name="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Nombre de Cuenta" required>
+                            <p *ngIf="formInfoCuenta.get('username')?.invalid && formInfoCuenta.get('username')?.touched" class="mt-2 text-sm text-red-600">
+                                <span *ngIf="formInfoCuenta.get('username')?.errors?.['required']" class="font-medium">¡Ha sucedido un error! El nombre de usuario es requerido.</span>
+                                <span *ngIf="formInfoCuenta.get('username')?.errors?.['minlength']" class="font-medium">¡Ha sucedido un error! El nombre de usuario debe tener al menos 5 caracteres.</span>
+                            </p>
                         </div>
 
                         <div class="mb-6">
@@ -26,9 +34,27 @@
                             <input formControlName="correo" type="email" id="correo" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="correo@gmail.com" readonly>
                         </div>
 
-                        <div class="mb-2">
+                        <div class="mb-6">
                             <label for="telefono" class="block mb-2 text-sm font-medium text-gray-900">Numero de Telefono</label>
                             <input formControlName="telefono" type="number" id="telefono" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="8711210000" readonly>
+                        </div>
+
+                        <!--Mensaje-->
+                        <div [ngClass]="{'hidden': invalido2 == false}" id="mensaje-error" class="flex p-4 mb-4 text-red-800 rounded-lg bg-red-50 " role="alert">
+                            <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                            <span class="sr-only">Info</span>
+                            <div class="ml-3 text-sm font-medium">
+                                Error al modificar la información, por favor intente de nuevo.
+                            </div>
+                            <button (click)="invalido2 = false" class="ml-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700">
+                                <span class="sr-only">Dismiss</span>
+                                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            </button>
+                        </div>
+
+                        <!--Boton-->
+                        <div class="text-end">
+                            <button [disabled]="formInfoUsuario.invalid" type="submit" [ngClass]="{'button-failed': apiFailed2, 'hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300': !formInfoUsuario.invalid, 'bg-blue-300': formInfoUsuario.invalid}" (animationend)="onAnimationEnd()" class="text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Modificar Información</button>
                         </div>
                     </form>
                 </div>
@@ -36,7 +62,7 @@
         </div>
 
         <!--Info Personal-->
-        <div class="mt-4 mx-4 px-6 py-4 bg-white border border-2 border-gray-300 rounded-lg" style="transform: translateY(-20%);">
+        <div class="mt-4 mx-4 px-6 py-4 bg-white border border-2 border-gray-300 rounded-lg" style="transform: translateY(-25%);">
             <!--Titulo-->
             <div>
                 <span class="text-xl font-medium">Informacion de Usuario</span>
@@ -44,50 +70,80 @@
 
             <!--Formulario-->
             <div class="mt-2">
-                <form [formGroup]="formInfoUsuario">
+                <form [formGroup]="formInfoUsuario" (ngSubmit)="updateMyInfoPersonal(formInfoUsuario.value)">
                     <div class="flex">
                         <!--Nombre-->
                         <div class="mb-6 basis-1/2 mr-2">
-                            <label for="nombre" class="block mb-2 text-sm font-medium text-gray-900">Nombre </label>
-                            <input formControlName="nombre" type="text" id="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Juan Jose">
+                            <label [ngClass]="{'text-red-700': formInfoUsuario.get('nombre')?.invalid && formInfoUsuario.get('nombre')?.touched || invalido1}" for="nombre" class="block mb-2 text-sm font-medium text-gray-900">Nombre </label>
+                            <input formControlName="nombre" [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': formInfoUsuario.get('nombre')?.invalid && formInfoUsuario.get('nombre')?.touched || invalido1}" type="text" id="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Juan Jose">
+                            <p *ngIf="formInfoUsuario.get('nombre')?.invalid && formInfoUsuario.get('nombre')?.touched" class="mt-2 text-sm text-red-600">
+                                <span *ngIf="formInfoUsuario.get('nombre')?.errors?.['required']" class="text-xs font-medium">¡Ha sucedido un error! El nombre es requerido.</span>
+                            </p>
                         </div>
     
                         <!--Apellido Paterno-->
                         <div class="mb-6 basis-1/2 ml-2">
-                            <label for="ap_paterno" class="block mb-2 text-sm font-medium text-gray-900">Apellido Paterno</label>
-                            <input formControlName="ap_paterno" type="text" id="ap_paterno" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Gonzales">
+                            <label [ngClass]="{'text-red-700': formInfoUsuario.get('ap_paterno')?.invalid && formInfoUsuario.get('ap_paterno')?.touched || invalido1}" for="ap_paterno" class="block mb-2 text-sm font-medium text-gray-900">Apellido Paterno</label>
+                            <input [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': formInfoUsuario.get('ap_paterno')?.invalid && formInfoUsuario.get('ap_paterno')?.touched || invalido1}" formControlName="ap_paterno" type="text" name="ap_paterno" id="ap_paterno" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Rodríguez" required>
+                            <p *ngIf="formInfoUsuario.get('ap_paterno')?.invalid && formInfoUsuario.get('ap_paterno')?.touched" class="mt-2 text-sm text-red-600">
+                                <span *ngIf="formInfoUsuario.get('ap_paterno')?.errors?.['required']" class="font-medium">¡Ha sucedido un error! El apellido paterno es requerido.</span>
+                                <span *ngIf="formInfoUsuario.get('ap_paterno')?.errors?.['minlength']" class="font-medium">¡Ha sucedido un error! El apellido paterno debe tener al menos 3 caracteres.</span>
+                            </p>
                         </div>
                     </div>
     
                     <div class="flex">
                         <!--Apellido Materno-->
                         <div class="mb-6 basis-1/2 mr-2">
-                            <label for="ap_materno" class="block mb-2 text-sm font-medium text-gray-900">Apellido Paterno</label>
-                            <input formControlName="ap_materno" type="text" id="ap_materno" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Garcia">
+                            <label [ngClass]="{'text-red-700': formInfoUsuario.get('ap_materno')?.invalid && formInfoUsuario.get('ap_materno')?.touched || invalido1}" for="ap_materno" class="block mb-2 text-sm font-medium text-gray-900">Apellido Materno</label>
+                            <input [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': formInfoUsuario.get('ap_materno')?.invalid && formInfoUsuario.get('ap_materno')?.touched || invalido1}" formControlName="ap_materno" type="text" name="ap_materno" id="ap_materno" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="García" required>
+                            <p *ngIf="formInfoUsuario.get('ap_materno')?.invalid && formInfoUsuario.get('ap_materno')?.touched" class="mt-2 text-sm text-red-600">
+                                <span *ngIf="formInfoUsuario.get('ap_materno')?.errors?.['required']" class="font-medium">¡Ha sucedido un error! El apellido materno es requerido.</span>
+                                <span *ngIf="formInfoUsuario.get('ap_materno')?.errors?.['minlength']" class="font-medium">¡Ha sucedido un error! El apellido materno debe tener al menos 3 caracteres.</span>
+                            </p>
                         </div>
     
                         <!--Sexo-->
                         <div class="mb-6 basis-1/2 ml-2">
-                            <label for="sexo" class="block mb-2 text-sm font-medium text-gray-900">Sexo</label>
-                            <select formControlName="sexo" id="sexo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                                <option value="" disabled>Seleccione una opción</option>
+                            <label [ngClass]="{'text-red-700': formInfoUsuario.get('sexo')?.invalid && formInfoUsuario.get('sexo')?.touched || invalido1}" for="sexo" class="block mb-2 text-sm font-medium text-gray-900">Sexo</label>
+                            <select [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': formInfoUsuario.get('sexo')?.invalid && formInfoUsuario.get('sexo')?.touched || invalido1}" formControlName="sexo" name="sexo" id="sexo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                                <option value="" disabled selected>Seleccione una opción</option>
                                 <option value="Masculino">Masculino</option>
                                 <option value="Femenino">Femenino</option>
                             </select>
+                            <p *ngIf="formInfoUsuario.get('sexo')?.invalid && formInfoUsuario.get('sexo')?.touched" class="mt-2 text-sm text-red-600">
+                                <span *ngIf="formInfoUsuario.get('sexo')?.errors?.['required']" class="font-medium">¡Ha sucedido un error! El sexo es requerido.</span>
+                            </p>
                         </div>
                     </div>
     
                     <div class="flex">
-                        <!--Apellido Materno-->
+                        <!--Fecha de Nacimiento-->
                         <div class="basis-1/2 mr-2">
-                            <label for="fecha_nacimiento" class="block mb-2 text-sm font-medium text-gray-900">Fecha de Nacimiento</label>
-                            <input formControlName="fecha_nacimiento" type="date" id="fecha_nacimiento" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            <label [ngClass]="{'text-red-700': formInfoUsuario.get('fecha_nacimiento')?.invalid && formInfoUsuario.get('fecha_nacimiento')?.touched || invalido1}" for="fecha_nacimiento" class="block mb-2 text-sm font-medium text-gray-900">Fecha de Nacimiento</label>
+                            <input [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': formInfoUsuario.get('fecha_nacimiento')?.invalid && formInfoUsuario.get('fecha_nacimiento')?.touched || invalido1}" formControlName="fecha_nacimiento" type="date" name="fecha_nacimiento" id="fecha_nacimiento" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                            <p *ngIf="formInfoUsuario.get('fecha_nacimiento')?.invalid && formInfoUsuario.get('fecha_nacimiento')?.touched" class="mt-2 text-sm text-red-600">
+                                <span *ngIf="formInfoUsuario.get('fecha_nacimiento')?.errors?.['required']" class="font-medium">¡Ha sucedido un error! La fecha de nacimiento es requerida.</span>
+                            </p>
                         </div>
     
-                        <!--Sexo-->
+                        <!--Boton-->
                         <div class="basis-1/2 self-end mb-px text-end">
-                            <button [disabled]="formInfoUsuario.invalid" type="submit" [ngClass]="{'hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300': !formInfoUsuario.invalid, 'bg-blue-300': formInfoUsuario.invalid}" class="text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Modificar Información</button>
+                            <button [disabled]="formInfoUsuario.invalid" type="submit" [ngClass]="{'button-failed': apiFailed1, 'hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300': !formInfoUsuario.invalid, 'bg-blue-300': formInfoUsuario.invalid}" (animationend)="onAnimationEnd()" class="text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Modificar Información</button>
                         </div>
+                    </div>
+
+                    <!--Mensaje-->
+                    <div [ngClass]="{'hidden': invalido1 == false}" id="mensaje-error" class="flex p-4 my-4 text-red-800 rounded-lg bg-red-50 " role="alert">
+                        <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                        <span class="sr-only">Info</span>
+                        <div class="ml-3 text-sm font-medium">
+                            Error al modificar la información, por favor intente de nuevo.
+                        </div>
+                        <button (click)="invalido1 = false" class="ml-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700">
+                            <span class="sr-only">Dismiss</span>
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        </button>
                     </div>
                 </form>
             </div>
@@ -100,26 +156,56 @@
                 <div>
                     <span class="text-xl font-medium">Cambiar Contraseña</span>
                 </div>
+
                 <!--Formulario-->
                 <div class="mt-2"> 
-                    <form [formGroup]="formCambiarPassword">
+                    <form [formGroup]="formCambiarPassword" (ngSubmit)="updateMyPassword(formCambiarPassword.value)">
+                        <!--Contraseña-->
                         <div class="mb-6">
-                            <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Contraseña Actual</label>
-                            <input formControlName="password" type="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="••••••••">
+                            <label [ngClass]="{'text-red-700': formCambiarPassword.get('password')?.invalid && formCambiarPassword.get('password')?.touched || invalido3}" for="password" class="block mb-2 text-sm font-medium text-gray-900">Contraseña Actual</label>
+                            <input [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': formCambiarPassword.get('password')?.invalid && formCambiarPassword.get('password')?.touched || invalido3}" formControlName="password" type="password" name="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="••••••••" required>
+                            <p *ngIf="formCambiarPassword.get('password')?.invalid && formCambiarPassword.get('password')?.touched" class="mt-2 text-sm text-red-600">
+                                <span *ngIf="formCambiarPassword.get('password')?.errors?.['required']" class="font-medium">¡Ha sucedido un error! La contraseña es requerida.</span>
+                                <span *ngIf="formCambiarPassword.get('password')?.errors?.['minlength']" class="font-medium">¡Ha sucedido un error! La contraseña debe tener al menos 8 caracteres.</span>
+                            </p>
                         </div>
 
+                        <!--Nueva Contraseña-->
                         <div class="mb-6">
-                            <label for="new-_password" class="block mb-2 text-sm font-medium text-gray-900">Nueva Contraseña</label>
-                            <input formControlName="new_password" type="password" id="new_password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="••••••••">
+                            <label [ngClass]="{'text-red-700': formCambiarPassword.get('new_password')?.invalid && formCambiarPassword.get('new_password')?.touched || invalido3}" for="new_password" class="block mb-2 text-sm font-medium text-gray-900">Nueva Contraseña</label>
+                            <input [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': formCambiarPassword.get('new_password')?.invalid && formCambiarPassword.get('new_password')?.touched || invalido3}" formControlName="new_password" type="password" name="new_password" id="new_password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="••••••••" required>
+                            <p *ngIf="formCambiarPassword.get('new_password')?.invalid && formCambiarPassword.get('new_password')?.touched" class="mt-2 text-sm text-red-600">
+                                <span *ngIf="formCambiarPassword.get('new_password')?.errors?.['required']" class="font-medium">¡Ha sucedido un error! La contraseña es requerida.</span>
+                                <span *ngIf="formCambiarPassword.get('new_password')?.errors?.['minlength']" class="font-medium">¡Ha sucedido un error! La contraseña debe tener al menos 8 caracteres.</span>
+                            </p>
                         </div>
 
+                        <!--Repetir Nueva Contraseña-->
                         <div class="mb-6">
-                            <label for="repeat_new_password" class="block mb-2 text-sm font-medium text-gray-900">Nueva Contraseña</label>
-                            <input formControlName="repeat_new_password" type="password" id="repeat_new_password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="••••••••">
+                            <label [ngClass]="{'text-red-700': formCambiarPassword.get('repeat_new_password')?.invalid && formCambiarPassword.get('repeat_new_password')?.touched || invalido3}" for="repeat_new_password" class="block mb-2 text-sm font-medium text-gray-900">Repetir Nueva Contraseña</label>
+                            <input [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': formCambiarPassword.get('repeat_new_password')?.invalid && formCambiarPassword.get('repeat_new_password')?.touched || invalido3}" formControlName="repeat_new_password" type="password" name="repeat_new_password" id="repeat_new_password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="••••••••" required>
+                            <p *ngIf="formCambiarPassword.get('repeat_new_password')?.invalid && formCambiarPassword.get('repeat_new_password')?.touched" class="mt-2 text-sm text-red-600">
+                                <span *ngIf="formCambiarPassword.get('repeat_new_password')?.errors?.['required']" class="font-medium">¡Ha sucedido un error! La contraseña es requerida.</span>
+                                <span *ngIf="formCambiarPassword.get('repeat_new_password')?.errors?.['minlength']" class="font-medium">¡Ha sucedido un error! La contraseña debe tener al menos 8 caracteres.</span>
+                            </p>
+                        </div>
+
+                        <!--Mensaje-->
+                        <div [ngClass]="{'hidden': invalido3 == false}" id="mensaje-error" class="flex p-4 mb-4 text-red-800 rounded-lg bg-red-50 " role="alert">
+                            <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                            <span class="sr-only">Info</span>
+                            <div class="ml-3 text-sm font-medium">
+                                <span *ngIf="pass">Las contraseñas no coinciden.</span>
+                                <span *ngIf="api">Error al cambiar la contraseña.</span>
+                            </div>
+                            <button (click)="invalido3 = false; pass = false; api = false" class="ml-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700">
+                                <span class="sr-only">Dismiss</span>
+                                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            </button>
                         </div>
 
                         <div class="text-end">
-                            <button [disabled]="formCambiarPassword.invalid" type="submit" [ngClass]="{'hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300': !formCambiarPassword.invalid, 'bg-blue-300': formCambiarPassword.invalid}" class="text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Cambiar Contraseña</button>
+                            <button [disabled]="formCambiarPassword.invalid" type="submit" [ngClass]="{'button-failed': apiFailed3, 'hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300': !formCambiarPassword.invalid, 'bg-blue-300': formCambiarPassword.invalid}" (animationend)="onAnimationEnd()" class="text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Cambiar Contraseña</button>
                         </div>
                     </form>
                 </div>

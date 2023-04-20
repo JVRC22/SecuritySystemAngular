@@ -50,15 +50,6 @@ export class UserService {
     );
   }
 
-  updateMyPassword(user: User)
-  {
-    return this.http.put<User>(this.url_api + "/user/update/password/auth", user)
-    .pipe(
-      retry(3),
-      catchError(this.handleError)
-    );
-  }
-
   verifyCode(id: number, user: User)
   {
     const dict = {codigo_verificacion: String(user.codigo_verificacion)}
@@ -81,7 +72,7 @@ export class UserService {
 
   getMyInfoUsuario()
   {
-    return this.http.get<User>(this.url_api + "/users/info")
+    return this.http.get<User>(this.url_api + "/users/access")
     .pipe(
       retry(3),
       catchError(this.handleError)
@@ -91,6 +82,33 @@ export class UserService {
   getMyInfoPersonal()
   {
     return this.http.get<InfoUsuario>(this.url_api + "/users/info")
+    .pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
+  updateMyUser(user: User)
+  {
+    return this.http.put<User>(this.url_api + "/user/update/access", user)
+    .pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
+  updateMyInfoPersonal(info_usuario: InfoUsuario)
+  {
+    return this.http.put<InfoUsuario>(this.url_api + "/user/update/info", info_usuario)
+    .pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
+  updateMyPassword(user: User)
+  {
+    return this.http.put<User>(this.url_api + "/user/update/password/auth", user)
     .pipe(
       retry(3),
       catchError(this.handleError)
