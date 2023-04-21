@@ -36,7 +36,7 @@
                             </a>
                         </li>
                         <!--Moderadores-->
-                        <li *ngIf="role == 1 || role == 2" class="rounded-lg bg-gray-50/50">
+                        <li *ngIf="role == 1" class="rounded-lg bg-gray-50/50">
                             <a (click)="moderadores()" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 a-link">
                                 <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:group-hover:text-white dark:text-gray-400" focusable="false" data-prefix="fas" data-icon="gem" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                     <path fill="currentColor" d="M378.7 32H133.3L256 182.7L378.7 32zM512 192l-107.4-141.3L289.6 192H512zM107.4 50.67L0 192h222.4L107.4 50.67zM244.3 474.9C247.3 478.2 251.6 480 256 480s8.653-1.828 11.67-5.062L510.6 224H1.365L244.3 474.9z"></path>
@@ -66,6 +66,17 @@
                                 </svg>                     
                                 
                                 <span class="flex-1 ml-3 whitespace-nowrap">Peticiones</span>
+                            </a>
+                        </li>
+
+                        <!--Home-->
+                        <li *ngIf="role == 3" class="rounded-lg bg-gray-50/50">
+                            <a routerLink="/home" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 a-link">
+                                <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                                </svg>                  
+                                
+                                <span class="flex-1 ml-3 whitespace-nowrap">Inicio</span>
                             </a>
                         </li>
 
@@ -109,7 +120,7 @@
                </div>
             </div>
 
-            <a routerLink="/" class="flex items-center py-2 px-4 rounded-lg bg-gray-200/50">
+            <a (click)="redirigir()" class="flex items-center py-2 px-4 rounded-lg bg-gray-200/50 a-link">
                 <!--<img src="https://flowbite.com/docs/images/logo.svg" class="h-8 mr-3" alt="Flowbite Logo">-->
                 <img src="../../../../assets/escudo.svg" alt="logo" class="mr-2" style="width: 32px; height: 32px;">
                 <span class="self-center text-2xl font-semibold whitespace-nowrap">ShopShield</span>

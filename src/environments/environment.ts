@@ -1,3 +1,3 @@
 export const environment = {
-    urlapi:'http://127.0.0.1:3333'
+    urlapi:'http://192.168.80.172:3333'
  };

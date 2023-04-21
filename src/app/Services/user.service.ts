@@ -6,6 +6,7 @@ import { InfoUsuario } from '../Interfaces/info-usuario';
 import { User } from '../Interfaces/user';
 import { Invitacion } from '../Interfaces/invitacion';
 import { TiendaUser } from '../Interfaces/tienda-user';
+import { Tienda } from '../Interfaces/tienda';
 
 @Injectable({
   providedIn: 'root'
@@ -168,6 +169,15 @@ export class UserService {
   getTiendasOwner()
   {
     return this.http.get<TiendaUser[]>(this.url_api + "/tiendas/invitados/owners")
+    .pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
+  misTiendasToken()
+  {
+    return this.http.get<TiendaUser[]>(this.url_api + "/tiendas/propias")
     .pipe(
       retry(3),
       catchError(this.handleError)

@@ -63,4 +63,21 @@ export class NavbarComponent {
       });
     }
   }
+
+  redirigir()
+  {
+    if(this.role == 1 || this.role == 2)
+    {
+      location.assign('/usuarios');
+    }
+
+    else if(this.role == 3)
+    {
+      this.router.navigate(['/home']);
+    }
+
+    else{
+      this.router.navigate(['/login']);
+    }
+  }
 }
