@@ -55,13 +55,13 @@ export class NavbarComponent {
 
   logout()
   {
-    if(confirm('¿Seguro que desea cerrar sesión?'))
-    {
+    //if(confirm('¿Seguro que desea cerrar sesión?'))
+    //{
       this.loginService.logout().subscribe(response => {
         localStorage.clear();
         location.assign('/');
       });
-    }
+    //}
   }
 
   redirigir()
