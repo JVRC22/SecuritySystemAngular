@@ -1,6 +1,6 @@
 <div class="relative overflow-x-auto w-full">
-    <div class="flex pt-2 pb-6 pl-4">
-        <h3 class="basis-1/2 text-4xl font-light text-blue-600 ">Lista de Moderadores</h3>
+    <div class="flex pt-2 pb-6">
+        <h3 class="md:basis-1/2 text-4xl font-light text-blue-600 ">Lista de Moderadores</h3>
 
         <!--Boton Drawer Agregar Moderador-->
         <div class="basis-1/2 text-end">
@@ -84,7 +84,7 @@
         </div>
     </div>
 
-    <table [ngClass]="{'hidden': usuarios.length <= 0}" class="mx-3 w-full text-sm text-left text-blue-100">
+    <table [ngClass]="{'hidden': usuarios.length <= 0}" class="w-full text-sm text-left text-blue-100">
         <thead class="text-xs text-black uppercase bg-blue-400 ">
             <tr>
                 <th scope="col" class="px-6 py-3">

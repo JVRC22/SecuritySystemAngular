@@ -1,5 +1,5 @@
 <div class="relative overflow-x-auto w-full">
-    <h3 class="text-4xl font-light text-blue-600 pt-2 pb-6 pl-4">Lista de Usuarios</h3>
+    <h3 class="text-4xl font-light text-blue-600 pt-2 pb-6">Lista de Usuarios</h3>
 
     <!--Lenght 0-->
     <div [ngClass]="{'hidden': usuarios.length > 0}" class="container flex justify-center t-5">
@@ -9,7 +9,7 @@
         </div>
     </div>
 
-    <table class="mx-3 w-full text-sm text-left text-blue-100">
+    <table class=" w-full text-sm text-left text-blue-100 overflow-x-auto md:overflow-x-hidden">
         <thead class="text-xs text-black uppercase bg-blue-400 ">
             <tr>
                 <th scope="col" class="px-6 py-3">

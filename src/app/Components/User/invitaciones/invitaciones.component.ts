@@ -34,6 +34,12 @@ export class InvitacionesComponent implements OnInit {
   apiFailed: boolean = false;
   invalido: boolean = false;
 
+  apiFailed1: boolean = false;
+  invalido1: boolean = false;
+
+  apiFailed2: boolean = false;
+  invalido2: boolean = false;
+
   constructor(private router: Router, private fb: FormBuilder, private route: ActivatedRoute, private userService: UserService, private tiendaService: TiendasService, private adminService: AdminService)
   {
     this.formInvitar = this.fb.group({
@@ -166,6 +172,10 @@ export class InvitacionesComponent implements OnInit {
     this.userService.procesarInvitacion(dict).subscribe(
       (data) => {
         location.reload();
+      },
+      (error) => {
+        this.invalido2 = true;
+        this.apiFailed2 = true;
       }
     );
   }
@@ -175,6 +185,10 @@ export class InvitacionesComponent implements OnInit {
     this.userService.enviarInvitacion(invitacion).subscribe(
       (data) => {
         location.reload();
+      },
+      (error) => {
+        this.invalido1 = true;
+        this.apiFailed1 = true;
       }
     );
   }
@@ -195,5 +209,7 @@ export class InvitacionesComponent implements OnInit {
   onAnimationEnd()
   {
     this.apiFailed = false;
+    this.apiFailed1 = false;
+    this.apiFailed2 = false;
   }
 }
