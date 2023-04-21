@@ -4,6 +4,8 @@ import { catchError, retry, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { InfoUsuario } from '../Interfaces/info-usuario';
 import { User } from '../Interfaces/user';
+import { Invitacion } from '../Interfaces/invitacion';
+import { TiendaUser } from '../Interfaces/tienda-user';
 
 @Injectable({
   providedIn: 'root'
@@ -88,6 +90,15 @@ export class UserService {
     );
   }
 
+  getAllInfoPersonal()
+  {
+    return this.http.get<InfoUsuario[]>(this.url_api + "/users/info/all")
+    .pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
   updateMyUser(user: User)
   {
     return this.http.put<User>(this.url_api + "/user/update/access", user)
@@ -109,6 +120,54 @@ export class UserService {
   updateMyPassword(user: User)
   {
     return this.http.put<User>(this.url_api + "/user/update/password/auth", user)
+    .pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
+  //Invitaciones
+  getInvitaciones(id: number)
+  {
+    return this.http.get<Invitacion[]>(this.url_api + "/invitaciones/" + id)
+    .pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
+  enviarInvitacion(invitacion: Invitacion)
+  {
+    return this.http.post<Invitacion>(this.url_api + "/invitacion", invitacion)
+    .pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
+  procesarInvitacion(dict: any)
+  {
+    return this.http.post(this.url_api + "/invitacion/process", dict)
+    .pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
+  unirmeATienda(invitacion: Invitacion)
+  {
+    const dict = {user_id: invitacion.user_id, codigo: String(invitacion.codigo)}
+
+    return this.http.post(this.url_api + "/tienda/invite", dict)
+    .pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
+  getTiendasOwner()
+  {
+    return this.http.get<TiendaUser[]>(this.url_api + "/tiendas/invitados/owners")
     .pipe(
       retry(3),
       catchError(this.handleError)

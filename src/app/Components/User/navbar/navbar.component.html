@@ -98,8 +98,8 @@
                     <a (click)="usuarios()" class="block py-2 pl-3 pr-4 text-gray-900 hover:text-blue-700 a-link">Usuarios</a>
                 </li>
 
-                <li>
-                    <a *ngIf="role == 1" (click)="moderadores()" class="block py-2 pl-3 pr-4 text-gray-900 hover:text-blue-700 a-link">Moderadores</a>
+                <li *ngIf="role == 1">
+                    <a (click)="moderadores()" class="block py-2 pl-3 pr-4 text-gray-900 hover:text-blue-700 a-link">Moderadores</a>
                 </li>
 
                 <li>

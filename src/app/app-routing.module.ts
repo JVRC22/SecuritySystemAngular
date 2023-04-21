@@ -24,7 +24,7 @@ import { SensoresComponent } from './Components/User/sensores/sensores.component
 import { InvitacionesComponent } from './Components/User/invitaciones/invitaciones.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/welcome', pathMatch: 'full' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
 
   //Home
   { path: 'welcome', component:WelcomeComponent, title: 'Bienvenido a ShopShield' },

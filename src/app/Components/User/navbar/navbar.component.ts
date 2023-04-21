@@ -59,7 +59,7 @@ export class NavbarComponent {
     {
       this.loginService.logout().subscribe(response => {
         localStorage.clear();
-        location.assign('/welcome');
+        location.assign('/');
       });
     }
   }
