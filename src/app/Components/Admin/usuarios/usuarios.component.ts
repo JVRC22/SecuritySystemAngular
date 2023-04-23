@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InfoUsuario } from 'src/app/Interfaces/info-usuario';
 import { User } from 'src/app/Interfaces/user';
 import { AdminService } from 'src/app/Services/admin.service';
+import { DeleteModalComponent } from '../../AngularMaterial/delete-modal/delete-modal.component';
 
 @Component({
   selector: 'app-usuarios',
@@ -20,7 +22,7 @@ export class UsuariosComponent implements OnInit {
   user!: User;
   info_usuario!: InfoUsuario;
 
-  constructor(private router: Router, private adminService: AdminService, private fb: FormBuilder, private route: ActivatedRoute) 
+  constructor(private router: Router, private adminService: AdminService, private fb: FormBuilder, private route: ActivatedRoute, private dialog: MatDialog) 
   {
     this.formInfoUsuario = this.fb.group({
       id:  ['', [Validators.required]],
@@ -112,10 +114,12 @@ export class UsuariosComponent implements OnInit {
 
   deleteUsuario(id: number)
   {
-    this.adminService.deleteUsuario(id).subscribe(
-      response => {
-        location.reload();
-      }
-    );
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {accion: 1, id: id};
+
+    const dialogRef = this.dialog.open(DeleteModalComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
 }

@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/Interfaces/user';
 import { AdminService } from 'src/app/Services/admin.service';
+import { DeleteModalComponent } from '../../AngularMaterial/delete-modal/delete-modal.component';
+import { ModificarInfoUsuarioDrawerComponent } from '../../AngularMaterial/modificar-info-usuario-drawer/modificar-info-usuario-drawer.component';
+import { io } from 'socket.io-client';
+import { environment } from 'src/environments/environment';
+import { AddModeradorDrawerComponent } from '../../AngularMaterial/add-moderador-drawer/add-moderador-drawer.component';
 
 @Component({
   selector: 'app-moderadores',
@@ -11,46 +17,18 @@ import { AdminService } from 'src/app/Services/admin.service';
 })
 export class ModeradoresComponent implements OnInit {
 
-  formAddModerador: FormGroup;
-  formUsuario: FormGroup;
-  formPassword: FormGroup;
+  public socket = io(environment.urlapi);
 
   usuarios: User[] = [];
-  user!: User;
 
-  invalido: boolean = false;
-
-  constructor(private router: Router, private adminService: AdminService, private fb: FormBuilder, private route: ActivatedRoute) 
-  {
-    this.formAddModerador = this.fb.group({
-      username:  ['', [Validators.required, Validators.minLength(5)]],
-      correo:  ['', [Validators.required, Validators.email]],
-      telefono:  ['', [Validators.required, Validators.min(1000000000)]],
-      password:  ['', [Validators.required, Validators.minLength(8)]],
-    });
-
-    this.formUsuario = this.fb.group({
-      username:  ['', [Validators.required, Validators.minLength(5)]],
-      estatus:  ['', [Validators.required]],
-    });
-
-    this.formPassword = this.fb.group({
-      password:  ['', [Validators.required, Validators.minLength(8)]],
-    });
-  }
+  constructor(private router: Router, private adminService: AdminService, private fb: FormBuilder, private route: ActivatedRoute, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getUsuariosModeradores();
-  }
 
-  getUsuarioUnico(id: number)
-  {
-    this.adminService.getUsuarioUnico(id).subscribe(
-      response => {
-        this.user = response;
-        this.formUsuario.patchValue(this.user);
-      }
-    );
+    this.socket.on('moderador', (data: any) => {
+      this.getUsuariosModeradores();
+    });
   }
 
   getUsuariosModeradores()
@@ -65,48 +43,33 @@ export class ModeradoresComponent implements OnInit {
     );
   }
 
-  addUsuarioModerador(user: User)
+  addUsuarioModerador()
   {
-    this.adminService.addUsuarioModerador(user).subscribe(
-      response => {
-        location.reload();
-      },
-      error => {
-        alert("Error al agregar el moderador.");
-      }
-    );
+    const dialogRef = this.dialog.open(AddModeradorDrawerComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
 
-  modificarUsuario(id: number, user: User)
+  modificarUsuario(id: number)
   {
-    this.adminService.updateUsuario(id, user).subscribe(
-      response => {
-        location.reload();
-      },
-      error => {
-        alert("Error al modificar el usuario");
-      }
-    );
-  }
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {id: id};
 
-  modificarUsuarioPassword(id: number, user: User)
-  {
-    this.adminService.updateUsuarioPassword(id, user).subscribe(
-      response => {
-        location.reload();
-      },
-      error => {
-        alert("Error al modificar la contraseña del usuario");
-      }
-    );
+    const dialogRef = this.dialog.open(ModificarInfoUsuarioDrawerComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
 
   deleteUsuario(id: number)
   {
-    this.adminService.deleteUsuarioModerador(id).subscribe(
-      response => {
-        location.reload();
-      }
-    );
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {accion: 2, id: id};
+
+    const dialogRef = this.dialog.open(DeleteModalComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Tienda } from 'src/app/Interfaces/tienda';
 import { TiendaUser } from 'src/app/Interfaces/tienda-user';
@@ -7,6 +8,7 @@ import { User } from 'src/app/Interfaces/user';
 import { AdminService } from 'src/app/Services/admin.service';
 import { TiendasService } from 'src/app/Services/tiendas.service';
 import { UsersTiendasService } from 'src/app/Services/users-tiendas.service';
+import { DeleteModalComponent } from '../../AngularMaterial/delete-modal/delete-modal.component';
 
 @Component({
   selector: 'app-tiendas',
@@ -35,7 +37,7 @@ export class TiendasComponent implements OnInit {
 
   tiendaActual: number = 0;
 
-  constructor(private usersInvitacionesService: UsersTiendasService, private tiendasService: TiendasService, private adminService: AdminService, private router: Router, private fb: FormBuilder, private route: ActivatedRoute)
+  constructor(private usersInvitacionesService: UsersTiendasService, private tiendasService: TiendasService, private adminService: AdminService, private router: Router, private fb: FormBuilder, private route: ActivatedRoute, private dialog: MatDialog)
   {
     this.formTienda = this.fb.group({
       nombre:  ['', [Validators.required, Validators.minLength(5)]],
@@ -215,13 +217,12 @@ export class TiendasComponent implements OnInit {
 
   deleteTienda(id: number)
   {
-    this.tiendasService.deleteTienda(id).subscribe(
-      response => {
-        location.reload();
-      },
-      error => {
-        alert("Error al eliminar la tienda");
-      }
-    );
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {accion: 3, id: id};
+
+    const dialogRef = this.dialog.open(DeleteModalComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
 }

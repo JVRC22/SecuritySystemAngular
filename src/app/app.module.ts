@@ -5,6 +5,8 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './Components/Admin/sidebar/sidebar.component';
@@ -30,6 +32,16 @@ import { InfoCuentaComponent } from './Components/User/info-cuenta/info-cuenta.c
 import { CambiarPasswordComponent } from './Components/Recuperacion/cambiar-password/cambiar-password.component';
 import { SensoresComponent } from './Components/User/sensores/sensores.component';
 import { InvitacionesComponent } from './Components/User/invitaciones/invitaciones.component';
+import { DeleteModalComponent } from './Components/AngularMaterial/delete-modal/delete-modal.component';
+import { AddInvitadoModalComponent } from './Components/AngularMaterial/add-invitado-modal/add-invitado-modal.component';
+import { ModificarTiendaModalComponent } from './Components/AngularMaterial/modificar-tienda-modal/modificar-tienda-modal.component';
+import { AdministrarInvitadosDrawerComponent } from './Components/AngularMaterial/administrar-invitados-drawer/administrar-invitados-drawer.component';
+import { ModificarInfoCuentaDrawerComponent } from './Components/AngularMaterial/modificar-info-cuenta-drawer/modificar-info-cuenta-drawer.component';
+import { ModificarInfoUsuarioDrawerComponent } from './Components/AngularMaterial/modificar-info-usuario-drawer/modificar-info-usuario-drawer.component';
+import { ModificarModeradorDrawerComponent } from './Components/AngularMaterial/modificar-moderador-drawer/modificar-moderador-drawer.component';
+import { AddModeradorDrawerComponent } from './Components/AngularMaterial/add-moderador-drawer/add-moderador-drawer.component';
+import { VerInvitadosDrawerComponent } from './Components/AngularMaterial/ver-invitados-drawer/ver-invitados-drawer.component';
+import { InfoSensoresDrawerComponent } from './Components/AngularMaterial/info-sensores-drawer/info-sensores-drawer.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +68,16 @@ import { InvitacionesComponent } from './Components/User/invitaciones/invitacion
     CambiarPasswordComponent,
     SensoresComponent,
     InvitacionesComponent,
+    DeleteModalComponent,
+    AddInvitadoModalComponent,
+    ModificarTiendaModalComponent,
+    AdministrarInvitadosDrawerComponent,
+    ModificarInfoCuentaDrawerComponent,
+    ModificarInfoUsuarioDrawerComponent,
+    ModificarModeradorDrawerComponent,
+    AddModeradorDrawerComponent,
+    VerInvitadosDrawerComponent,
+    InfoSensoresDrawerComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,6 +86,8 @@ import { InvitacionesComponent } from './Components/User/invitaciones/invitacion
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    MatSlideToggleModule,
+    MatDialogModule
   ],
   providers: [
     {

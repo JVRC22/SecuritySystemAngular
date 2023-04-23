@@ -35,7 +35,7 @@ export class NavbarComponent {
 
   moderadores()
   {
-    location.assign('/moderadores');
+    this.router.navigate(['/moderadores']);
   }
 
   tiendas()
@@ -45,7 +45,7 @@ export class NavbarComponent {
 
   peticiones()
   {
-    location.assign('/peticiones');
+    this.router.navigate(['/peticiones']);
   }
 
   login()

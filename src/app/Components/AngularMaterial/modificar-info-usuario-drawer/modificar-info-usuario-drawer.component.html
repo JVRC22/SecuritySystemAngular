@@ -1,0 +1,76 @@
+<!--Drawer Usuario-->
+<div class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto bg-white w-80">
+    <!--Titulo-->
+    <h5 class="inline-flex items-center mb-4 text-base font-semibold text-gray-500">
+        <svg class="w-5 h-5 mr-2" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+        </svg>
+        <span>Informacion de Usuario</span>
+    </h5>
+
+    <!--Boton Cerrar-->
+    <button (click)="closeDialog()" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center" >
+        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+        <span class="sr-only">Cerrar</span>
+    </button>
+
+    <!--Formulario Usuario-->
+    <form class="mb-6" [formGroup]="formUsuario" (ngSubmit)="modificarUsuario(formUsuario.value)">
+
+        <!--Username-->
+        <div class="mb-6">
+           <label [ngClass]="{'text-red-700': formUsuario.get('username')?.invalid && formUsuario.get('username')?.touched || invalido}" for="username" class="block mb-2 text-sm font-medium text-gray-900">Username</label>
+           <input [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': formUsuario.get('username')?.invalid && formUsuario.get('username')?.touched || invalido}" formControlName="username" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Usuario" required>
+           <p *ngIf="formUsuario.get('username')?.invalid && formUsuario.get('username')?.touched" class="mt-2 text-sm text-red-600">
+            <span *ngIf="formUsuario.get('username')?.errors?.['required']" class="font-medium">¡Ha sucedido un error! El nombre de usuario es requerido.</span>
+            <span *ngIf="formUsuario.get('username')?.errors?.['minlength']" class="font-medium">¡Ha sucedido un error! El nombre de usuario debe tener al menos 5 caracteres.</span>
+        </p>
+        </div>
+
+        <!--Estatus-->
+        <div class="mb-6">
+            <label for="estatus" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Estatus</label>
+            <select formControlName="estatus" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                <option value="0" disabled>Sin Verificar</option>
+                <option value="1">Desactivada</option>
+                <option value="2">Activada</option>
+            </select>
+        </div>
+
+        <!--Mensaje Error-->
+        <div [ngClass]="{'hidden': invalido == false}" id="mensaje-error" class="flex p-4 mb-4 text-red-800 rounded-lg bg-red-50 " role="alert">
+            <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+            <span class="sr-only">Info</span>
+            <div class="ml-3 text-sm font-medium">
+                El nombre de usuario ya esta en uso.  
+            </div>
+        </div>
+
+        <!--Boton Actualizar Usuario-->
+        <button [disabled]="formUsuario.invalid" [ngClass]="{'hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300': !formUsuario.invalid, 'bg-blue-300': formUsuario.invalid}" data-drawer-hide="drawer-info-usuario" aria-controls="drawer-info-usuario" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2">Modificar Informacion</button>
+    </form>
+
+    <hr class="my-5 px-5">
+    
+    <!--Acordion Cambiar Password-->
+    <div id="accordion-password" data-accordion="collapse">
+        <div id="accordion-password-body" aria-labelledby="accordion-password-heading">
+            <div class="p-5 pb-2 border border-gray-200 rounded-lg">
+                <form [formGroup]="formPassword" (ngSubmit)="modificarUsuarioPassword(formPassword.value)">
+                    <!--Contraseña-->
+                    <div class="mb-2">
+                        <label [ngClass]="{'text-red-700': formPassword.get('password')?.invalid && formPassword.get('password')?.touched}" for="password" class="block mb-2 text-xs font-medium text-gray-900 dark:text-white">Ingrese la nueva contraseña:</label>
+                        <input [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': formPassword.get('password')?.invalid && formPassword.get('password')?.touched}" formControlName="password" type="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                        <p *ngIf="formPassword.get('password')?.invalid && formPassword.get('password')?.touched" class="mt-2 text-xs text-red-600">
+                            <span *ngIf="formPassword.get('password')?.errors?.['required']" class="font-medium">¡Ha sucedido un error! La contraseña es requerida.</span>
+                            <span *ngIf="formPassword.get('password')?.errors?.['minlength']" class="font-medium">¡Ha sucedido un error! La contraseña debe tener al menos 8 caracteres.</span>
+                        </p>
+                    </div>
+
+                    <!--Boton Cambiar Password-->
+                    <button [disabled]="formPassword.invalid" [ngClass]="{'hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300': !formPassword.invalid, 'bg-blue-300': formPassword.invalid}" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-xs px-5 py-2.5 mr-2 mb-2 focus:outline-none block">Cambiar Contraseña</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
