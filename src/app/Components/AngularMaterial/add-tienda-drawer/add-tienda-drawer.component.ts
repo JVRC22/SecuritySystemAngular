@@ -1,6 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { io } from 'socket.io-client';
 import { Tienda } from 'src/app/Interfaces/tienda';
@@ -10,25 +10,24 @@ import { TiendasService } from 'src/app/Services/tiendas.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-modificar-tienda-modal',
-  templateUrl: './modificar-tienda-modal.component.html',
-  styleUrls: ['./modificar-tienda-modal.component.css']
+  selector: 'app-add-tienda-drawer',
+  templateUrl: './add-tienda-drawer.component.html',
+  styleUrls: ['./add-tienda-drawer.component.css']
 })
-export class ModificarTiendaModalComponent implements OnInit {
+export class AddTiendaDrawerComponent implements OnInit {
 
   public socket = io(environment.urlapi);
 
-  formModificarTienda: FormGroup;
+  formTienda: FormGroup;
 
   users: User[] = [];
-  tienda!: Tienda;
 
-  apiFailed: boolean = false;
   invalido: boolean = false;
+  apiFailed: boolean = false;
 
-  constructor(private router: Router, private fb: FormBuilder, private route: ActivatedRoute, private tiendasService: TiendasService, private adminService: AdminService, private dialogRef: MatDialogRef<ModificarTiendaModalComponent>, @Inject(MAT_DIALOG_DATA) private data: { id: number })
+  constructor(private router: Router, private fb: FormBuilder, private route: ActivatedRoute, private tiendasService: TiendasService, private adminService: AdminService, private dialogRef: MatDialogRef<AddTiendaDrawerComponent>)
   {
-    this.formModificarTienda = this.fb.group({
+    this.formTienda = this.fb.group({
       nombre:  ['', [Validators.required, Validators.minLength(5)]],
       user_id:  ['', [Validators.required]]
     });
@@ -36,7 +35,6 @@ export class ModificarTiendaModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUsers();
-    this.getTienda();
 
     this.socket.on('usuario', (data: any) => {
       this.getUsers();
@@ -52,19 +50,9 @@ export class ModificarTiendaModalComponent implements OnInit {
     );
   }
 
-  getTienda()
+  addTienda(tienda: Tienda)
   {
-    this.tiendasService.getTienda(this.data.id).subscribe(
-      data => {
-        this.tienda = data;
-        this.formModificarTienda.patchValue(this.tienda);
-      }
-    );
-  }
-
-  updateTienda(tienda: Tienda)
-  {
-    this.tiendasService.updateTienda(this.data.id, tienda).subscribe(
+    this.tiendasService.addTienda(tienda).subscribe(
       response => {
         this.dialogRef.close();
       },

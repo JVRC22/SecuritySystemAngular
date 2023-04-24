@@ -9,6 +9,12 @@ import { AdminService } from 'src/app/Services/admin.service';
 import { TiendasService } from 'src/app/Services/tiendas.service';
 import { UsersTiendasService } from 'src/app/Services/users-tiendas.service';
 import { DeleteModalComponent } from '../../AngularMaterial/delete-modal/delete-modal.component';
+import { io } from 'socket.io-client';
+import { environment } from 'src/environments/environment';
+import { AddTiendaDrawerComponent } from '../../AngularMaterial/add-tienda-drawer/add-tienda-drawer.component';
+import { ModificarTiendaModalComponent } from '../../AngularMaterial/modificar-tienda-modal/modificar-tienda-modal.component';
+import { AddInvitadoModalComponent } from '../../AngularMaterial/add-invitado-modal/add-invitado-modal.component';
+import { AdministrarInvitadosDrawerComponent } from '../../AngularMaterial/administrar-invitados-drawer/administrar-invitados-drawer.component';
 
 @Component({
   selector: 'app-tiendas',
@@ -17,53 +23,30 @@ import { DeleteModalComponent } from '../../AngularMaterial/delete-modal/delete-
 })
 export class TiendasComponent implements OnInit {
 
+  public socket = io(environment.urlapi);
+
   tiendas: Tienda[] = [];
   owners: TiendaUser[] = [];
-  invitados: TiendaUser[] = [];
   users: User[] = [];
-  usersFaltantes: User[] = [];
 
-  usuariosSeleccionados: number[] = [];
   sensoresSeleccionados: number[] = [];
-  
-  formTienda: FormGroup;
+
   formSensores: FormGroup;
-  formEliminarUsuarios: FormGroup;
-
-  formAgregarInvitado: FormGroup;
-  invitado_id: number = 0;
-
-  formModificarTienda: FormGroup;
-
-  tiendaActual: number = 0;
 
   constructor(private usersInvitacionesService: UsersTiendasService, private tiendasService: TiendasService, private adminService: AdminService, private router: Router, private fb: FormBuilder, private route: ActivatedRoute, private dialog: MatDialog)
   {
-    this.formTienda = this.fb.group({
-      nombre:  ['', [Validators.required, Validators.minLength(5)]],
-      user_id:  ['', [Validators.required]]
-    });
-
     this.formSensores = this.fb.group({
-    });
-
-    this.formEliminarUsuarios = this.fb.group({
-    });
-
-    this.formAgregarInvitado = this.fb.group({
-      user_id:  ['', [Validators.required]]
-    });
-
-    this.formModificarTienda = this.fb.group({
-      nombre:  ['', [Validators.required, Validators.minLength(5)]],
-      user_id:  ['', [Validators.required]]
-    });
+    });  
   }
 
   ngOnInit(): void {
     this.getTiendas();
     this.getOwners();
     this.getUsers();
+
+    this.socket.on('tienda', (data: any) => {
+      this.getTiendas();
+    });
   }
 
   getTiendas()
@@ -80,6 +63,7 @@ export class TiendasComponent implements OnInit {
   {
     this.usersInvitacionesService.getOwners().subscribe(
       data => {
+        console.log(data);
         this.owners = data;
       }
     );
@@ -94,125 +78,64 @@ export class TiendasComponent implements OnInit {
     );
   }
 
-  getFaltantes(id: number)
-  {
-    this.tiendaActual = id;
-
-    this.tiendasService.getFaltantes(id).subscribe(
-      data => {
-        this.usersFaltantes = data;
-      }
-    );
-  }
-
-  getInvitados(id_tienda: number)
-  {
-    console.log(id_tienda);
-
-    this.usersInvitacionesService.getInvitados(id_tienda).subscribe(
-      data => {
-        this.invitados = data;
-      },
-      error => {
-        console.log(error);
-      }
-    );
-  }
-
   getInfoOwnersTienda(tienda_id: number)
   {
+    console.log(this.owners);
+
     const owner = this.owners.find(owner => owner.tienda_id === tienda_id);
     console.log(owner);
 
     const user = this.users.find(user => user.id === owner?.user_id);
-    console.log(user);
+    //console.log(user);
 
     return user ? user.correo : "";
   }
 
-  getInfoInvitadosTienda(user_id: number)
+  //Gestion de Invitados
+  administrarInvitados(id: number)
   {
-    const invitado = this.invitados.find(invitado => invitado.user_id === user_id);
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {id: id};
+    dialogConfig.enterAnimationDuration = 0;
 
-    const user = this.users.find(user => user.id === invitado?.user_id);
+    const dialogRef = this.dialog.open(AdministrarInvitadosDrawerComponent, dialogConfig);
 
-    return user ? user.correo : "";
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
 
-  guardarEnArregloEliminar(id: number)
+  addInvitado(id: number)
   {
-    if (!this.usuariosSeleccionados.includes(id)) 
-    {
-      this.usuariosSeleccionados.push(id);
-    }
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {id: id};
+    
+    const dialogRef = this.dialog.open(AddInvitadoModalComponent, dialogConfig);
 
-    else 
-    {
-        const index = this.usuariosSeleccionados.indexOf(id);
-        this.usuariosSeleccionados.splice(index, 1);
-    }
-  }
-
-  addInvitado(id: number, tienda_user: TiendaUser)
-  {
-    tienda_user.tienda_id = id;
-
-    console.log(tienda_user);
-
-    this.usersInvitacionesService.addInvitado(tienda_user).subscribe(
-      response => {
-        location.reload();
-      },
-      error => {
-        alert("Error al agregar los usuarios");
-      }
-    );
-  }
-
-  deleteInvitados(id: number)
-  {
-    this.usersInvitacionesService.deleteInvitados(id, this.usuariosSeleccionados).subscribe(
-      response => {
-        location.reload();
-      },
-      error => {
-        alert("Error al eliminar los usuarios");
-      }
-    );
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
 
   //Gestion de Tiendas
-  getTienda(id: number)
+  addTienda()
   {
-    this.tiendaActual = id;
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.enterAnimationDuration = 0;
 
-    this.tiendasService.getTienda(id).subscribe(
-      data => {
-        this.formModificarTienda.patchValue(data);
-      }
-    );
+    const dialogRef = this.dialog.open(AddTiendaDrawerComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
 
-  addTienda(tienda: Tienda)
+  updateTienda(id: number)
   {
-    this.tiendasService.addTienda(tienda).subscribe(
-      response => {
-        location.reload();
-      },
-      error => {
-        console.log(error);
-        alert("Error al agregar la tienda");
-      }
-    );
-  }
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {id: id};
 
-  updateTienda(id: number,  tienda: Tienda)
-  {
-    this.tiendasService.updateTienda(id, tienda).subscribe(
-      response => {
-        location.reload();
-      }
-    );
+    const dialogRef = this.dialog.open(ModificarTiendaModalComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
 
   deleteTienda(id: number)

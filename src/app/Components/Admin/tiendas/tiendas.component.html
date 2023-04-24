@@ -5,63 +5,14 @@
 
         <!--Boton Drawer Agregar Moderador-->
         <div class="basis-1/2 text-end">
-            <button class="mr-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none" type="button" data-drawer-target="drawer-right-agregar-tienda" data-drawer-show="drawer-right-agregar-tienda" data-drawer-placement="right" aria-controls="drawer-right-agregar-tienda">    
+            <button (click)="addTienda()" class="mr-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none" type="button">    
             Agregar Tienda
             </button>
-        </div>
- 
-        <!--Drawer Agregar Moderador-->
-        <div id="drawer-right-agregar-tienda" class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80 dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-right-label">
-            <!--Titulo-->
-            <h5 id="drawer-right-label" class="inline-flex items-center mb-4 text-base font-semibold text-gray-500 dark:text-gray-400">
-                <svg class="w-5 h-5 mr-2" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
-                </svg>
-                Agregar Tienda
-            </h5>
-
-            <!--Boton Cerrar-->
-            <button type="button" data-drawer-hide="drawer-right-agregar-tienda" aria-controls="drawer-right-agregar-tienda" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
-                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                </svg>
-                <span class="sr-only">Cerrar Menu</span>
-            </button>
-
-            <!--Formulario Agregar Moderador-->
-            <form class="space-y-6" [formGroup]="formTienda" (ngSubmit)="addTienda(formTienda.value)">
-                <!--Username-->
-                <div>
-                    <label [ngClass]="{'text-red-700': formTienda.get('nombre')?.invalid && formTienda.get('nombre')?.touched}" for="nombre" class="block mb-2 text-sm font-medium text-gray-900">Nombre de Tienda</label>
-                    <input [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': formTienda.get('nombre')?.invalid && formTienda.get('nombre')?.touched}" formControlName="nombre" type="text" name="nombre" id="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Nombre" required>
-                    <p *ngIf="formTienda.get('nombre')?.invalid && formTienda.get('nombre')?.touched" class="mt-2 text-sm text-red-600">
-                        <span *ngIf="formTienda.get('nombre')?.errors?.['required']" class="font-medium">¡Ha sucedido un error! El nombre de tienda es requerido.</span>
-                        <span *ngIf="formTienda.get('nombre')?.errors?.['minlength']" class="font-medium">¡Ha sucedido un error! El nombre de tienda debe tener al menos 5 caracteres.</span>
-                    </p>
-                </div>
-
-                <!--Propietario-->
-                <div>
-                    <label [ngClass]="{'text-red-700': formTienda.get('user_id')?.invalid && formTienda.get('user_id')?.touched}" for="user_id" class="block mb-2 text-sm font-medium text-gray-900">Propietario</label>
-                    <select [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': formTienda.get('user_id')?.invalid && formTienda.get('user_id')?.touched}" formControlName="user_id" name="user_id" id="user_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required="">
-                        <option value="" selected disabled>Seleccione un propietario</option>
-                        <option *ngFor="let user of users" [value]="user.id">
-                            <span>{{user.id}}.- <span>{{user.correo}}</span></span>
-                        </option>
-                    </select>
-                    <p *ngIf="formTienda.get('user_id')?.invalid && formTienda.get('user_id')?.touched" class="mt-2 text-sm text-red-600">
-                        <span *ngIf="formTienda.get('user_id')?.errors?.['required']" class="font-medium">¡Ha sucedido un error! El propietario es requerido.</span>
-                    </p>
-                </div>
-
-                <!--Informacion Personal-->
-                <button [disabled]="formTienda.invalid" data-drawer-hide="drawer-right-agregar-tienda" aria-controls="drawer-right-agregar-tienda" type="submit" [ngClass]="{'hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300': !formTienda.invalid, 'bg-blue-300': formTienda.invalid}" class="w-full text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Añadir Tienda</button>
-            </form>
         </div>
     </div>
 
     <!--Lenght 0-->
-    <div [ngClass]="{'hidden': tiendas.length > 0}" class="container flex justify-center t-5">
+    <div [ngClass]="{'hidden': tiendas.length > 0}" class="w-full flex justify-center t-5">
         <div class="px-4 py-3 basis-1/2">
             <h1 class="text-center text-3xl font-medium mb-3">No hay tiendas para mostrar</h1>
             <p class="text-center text-lg">No hay tiendas registradas en este momento. Agrega una tienda o espera a que alguna tienda sea registrada por otro usuario.</p>
@@ -87,7 +38,7 @@
                             </svg>
                         </button>
 
-                        <!--Dropdown Acciones-->
+                        <!--Dropdown Acciones - Suspendido-->
                         <div id="dropdown" class="text-start border z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow drop-shadow-md w-44">
                             <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
 
@@ -202,82 +153,13 @@
                     <!--Mostrar Invitados-->
                     <div class="mb-2">
                         <!--Botorn Drawer Mostrar Invitados-->
-                        <button (click)="getInvitados(tienda.id)" data-drawer-target="drawer-right-mostrar-invitados" data-drawer-show="drawer-right-mostrar-invitados" data-drawer-placement="right" aria-controls="drawer-right-mostrar-invitados" class="w-full px-3 py-2 text-xs font-medium text-center text-white bg-gray-400 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-200">Mostrar Invitados</button>
-
-                        <!--Drawer Mostrar Invitados-->
-                        <div id="drawer-right-mostrar-invitados" class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80 dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-right-label">
-                            <!--Titulo-->
-                            <h5 id="drawer-right-label" class="inline-flex items-center mb-4 text-base font-semibold text-gray-500 dark:text-gray-400">
-                                <svg class="w-5 h-5 mr-2" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
-                                </svg>
-                                Eliminar Invitados
-                            </h5>
-
-                            <!--Boton Cerrar-->
-                            <button type="button" data-drawer-hide="drawer-right-mostrar-invitados" aria-controls="drawer-right-mostrar-invitados" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
-                                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                                </svg>
-                                <span class="sr-only">Cerrar Menu</span>
-                            </button>
-
-                            <!--Formulario Agregar Moderador-->
-                            <form class="space-y-6" [formGroup]="formEliminarUsuarios" (ngSubmit)="deleteInvitados(tienda.id)">
-                                <!--Invitado-->
-                                <div *ngFor="let invitado of invitados">
-                                    <div [ngClass]="{'bg-gray-300': invitado.is_owner == true}" class="border bg-gray-100 rounded-lg px-3 py-3">
-                                        <input (change)="guardarEnArregloEliminar(invitado.id)" [disabled]="invitado.is_owner == true" [ngClass]="{'bg-gray-200': invitado.is_owner == true}" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2">
-                                        <label class="ml-2 text-sm font-medium text-gray-900">
-                                            <span class="font-medium text-md">ID°{{invitado.user_id}}.- <span class="font-normal text-blue-700">{{getInfoInvitadosTienda(invitado.user_id)}}</span></span>
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <!--Informacion Personal-->
-                                <button [disabled]="usuariosSeleccionados.length <= 0" [ngClass]="{'hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300': usuariosSeleccionados.length > 0, 'bg-red-300': usuariosSeleccionados.length <= 0}" data-drawer-hide="drawer-right-mostrar-invitados" aria-controls="drawer-right-mostrar-invitados" type="submit" class="w-full text-white bg-red-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Eliminar Invitados</button>
-                            </form>
-                        </div>
+                        <button (click)="administrarInvitados(tienda.id)" class="w-full px-3 py-2 text-xs font-medium text-center text-white bg-gray-400 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-200">Mostrar Invitados</button>
                     </div>
 
                     <!--Agregar Invitado-->
                     <div class="mb-2">
                         <!--Boton Modal Agregar Invitado-->
-                        <button (click)="getFaltantes(tienda.id)" data-modal-target="add-invitado-modal" data-modal-toggle="add-invitado-modal" class="w-full px-3 py-2 text-xs font-medium text-center text-white bg-gray-400 rounded-lg hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-200">Añadir Invitado</button>
-
-                        <!--Modal Agregar Invitado-->
-                        <div id="add-invitado-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                            <div class="relative w-full max-w-md max-h-full">
-                                <div class="relative bg-white rounded-lg shadow">
-                                    <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="add-invitado-modal">
-                                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                                        <span class="sr-only">Close modal</span>
-                                    </button>
-
-                                    <div class="px-6 py-6 lg:px-8">
-                                        <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Agregar Invitados</h3>
-
-                                        <!--Formulario-->
-                                        <form class="space-y-6" [formGroup]="formAgregarInvitado" (ngSubmit)="addInvitado(tiendaActual, formAgregarInvitado.value)">
-                                            <div>
-                                                <label [ngClass]="{'text-red-700': formAgregarInvitado.get('user_id')?.invalid && formAgregarInvitado.get('user_id')?.touched}" for="user_id" class="block mb-2 text-sm font-medium text-gray-900">Selecciona un usuario:</label>
-                                                <select [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': formAgregarInvitado.get('user_id')?.invalid && formAgregarInvitado.get('user_id')?.touched}" formControlName="user_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
-                                                    <option value="" selected disabled>Selecciona un usuario</option>
-                                                    <option *ngFor="let user of usersFaltantes" [value]="user.id">
-                                                        <span>{{user.id}}.- {{user.correo}}</span>
-                                                    </option>
-                                                </select>
-                                                <p *ngIf="formAgregarInvitado.get('user_id')?.invalid && formAgregarInvitado.get('user_id')?.touched" class="mt-2 text-sm text-red-600">
-                                                    <span *ngIf="formAgregarInvitado.get('user_id')?.errors?.['required']" class="font-medium">¡Ha sucedido un error! El usuario es requerido.</span>
-                                                </p>
-                                            </div>
-
-                                            <button data-modal-hide="add-invitado-modal" [disabled]="formAgregarInvitado.invalid" type="submit" [ngClass]="{'hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300': !formAgregarInvitado.invalid, 'bg-blue-300': formAgregarInvitado.invalid}" class="w-full text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Añadir Usuario</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> 
+                        <button (click)="addInvitado(tienda.id)" class="w-full px-3 py-2 text-xs font-medium text-center text-white bg-gray-400 rounded-lg hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-200">Añadir Invitado</button>
                     </div>
 
                     <!--HR-->
@@ -288,52 +170,7 @@
                         <!--Modificar Tienda-->
                         <div class="basis-1/2 mr-1">
                             <!--Boton Modal Modificar Tienda-->
-                            <button (click)="getTienda(tienda.id)" data-modal-target="modificar-tienda-modal" data-modal-toggle="modificar-tienda-modal" class="w-full px-3 py-2 text-xs font-medium text-center text-white bg-gray-400 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-200">Modificar Tienda</button>
-
-                            <!--Modal Modificar Tienda-->
-                            <div id="modificar-tienda-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                                <div class="relative w-full max-w-md max-h-full">
-                                    <div class="relative bg-white rounded-lg shadow">
-                                        <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="modificar-tienda-modal">
-                                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                                            <span class="sr-only">Close modal</span>
-                                        </button>
-
-                                        <div class="px-6 py-6 lg:px-8">
-                                            <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Modificar Tienda</h3>
-
-                                            <!--Formulario-->
-                                            <form class="space-y-6" [formGroup]="formModificarTienda" (ngSubmit)="updateTienda(tiendaActual, formModificarTienda.value)">
-                                                <!--Username-->
-                                                <div>
-                                                    <label [ngClass]="{'text-red-700': formModificarTienda.get('nombre')?.invalid && formModificarTienda.get('nombre')?.touched}" for="nombre" class="block mb-2 text-sm font-medium text-gray-900">Nombre de Tienda</label>
-                                                    <input [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': formModificarTienda.get('nombre')?.invalid && formModificarTienda.get('nombre')?.touched}" formControlName="nombre" type="text" name="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Nombre" required>
-                                                    <p *ngIf="formModificarTienda.get('nombre')?.invalid && formModificarTienda.get('nombre')?.touched" class="mt-2 text-sm text-red-600">
-                                                        <span *ngIf="formModificarTienda.get('nombre')?.errors?.['required']" class="font-medium">¡Ha sucedido un error! El nombre de tienda es requerido.</span>
-                                                        <span *ngIf="formModificarTienda.get('nombre')?.errors?.['minlength']" class="font-medium">¡Ha sucedido un error! El nombre de tienda debe tener al menos 5 caracteres.</span>
-                                                    </p>
-                                                </div>
-
-                                                <!--Propietario-->
-                                                <div>
-                                                    <label [ngClass]="{'text-red-700': formModificarTienda.get('user_id')?.invalid && formModificarTienda.get('user_id')?.touched}" for="user_id" class="block mb-2 text-sm font-medium text-gray-900">Propietario</label>
-                                                    <select [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': formModificarTienda.get('user_id')?.invalid && formModificarTienda.get('user_id')?.touched}" formControlName="user_id" name="user_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required="">
-                                                        <option value="" selected disabled>Seleccione un propietario</option>
-                                                        <option *ngFor="let user of users" [value]="user.id">
-                                                            <span>{{user.id}}.- <span>{{user.correo}}</span></span>
-                                                        </option>
-                                                    </select>
-                                                    <p *ngIf="formModificarTienda.get('user_id')?.invalid && formModificarTienda.get('user_id')?.touched" class="mt-2 text-sm text-red-600">
-                                                        <span *ngIf="formModificarTienda.get('user_id')?.errors?.['required']" class="font-medium">¡Ha sucedido un error! El propietario es requerido.</span>
-                                                    </p>
-                                                </div>
-
-                                                <button data-modal-hide="modificar-tienda-modal" [disabled]="formModificarTienda.invalid" type="submit" [ngClass]="{'hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300': !formModificarTienda.invalid, 'bg-blue-300': formModificarTienda.invalid}" class="w-full text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Añadir Usuario</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> 
+                            <button (click)="updateTienda(tienda.id)" class="w-full px-3 py-2 text-xs font-medium text-center text-white bg-gray-400 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-200">Modificar Tienda</button>
                         </div>
 
                         <!--Eliminar Tienda-->

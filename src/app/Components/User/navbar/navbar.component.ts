@@ -1,19 +1,34 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { io } from 'socket.io-client';
 import { LoginService } from 'src/app/Services/login.service';
+import { PeticionesService } from 'src/app/Services/peticiones.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
 
-  constructor(private router: Router, private loginService: LoginService) { }
+  constructor(private router: Router, private loginService: LoginService, private peticionesService: PeticionesService) { }
+
+  public socket = io(environment.urlapi);
 
   username: string = localStorage.getItem('username') || '';
   correo: string = localStorage.getItem('email') || '';
   role: number = Number(localStorage.getItem('role')) || 0;
+
+  numPeticiones: number = 0;
+
+  ngOnInit(): void {
+    this.getPeticiones();
+
+    this.socket.on('peticion', (data: any) => {
+      this.getPeticiones();
+    });
+  }
 
   getData()
   {
@@ -30,7 +45,7 @@ export class NavbarComponent {
 
   usuarios()
   {
-    location.assign('/usuarios');
+    this.router.navigate(['/usuarios']);
   }
 
   moderadores()
@@ -40,12 +55,22 @@ export class NavbarComponent {
 
   tiendas()
   {
-    location.assign('/tiendas');
+    this.router.navigate(['/tiendas']);
   }
 
   peticiones()
   {
     this.router.navigate(['/peticiones']);
+  }
+
+  getPeticiones()
+  {
+    this.peticionesService.getPeticiones().subscribe(
+      response => {
+        console.log(response);
+        this.numPeticiones = response.length;
+      }
+    );
   }
 
   login()

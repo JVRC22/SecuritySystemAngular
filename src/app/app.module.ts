@@ -42,6 +42,7 @@ import { ModificarModeradorDrawerComponent } from './Components/AngularMaterial/
 import { AddModeradorDrawerComponent } from './Components/AngularMaterial/add-moderador-drawer/add-moderador-drawer.component';
 import { VerInvitadosDrawerComponent } from './Components/AngularMaterial/ver-invitados-drawer/ver-invitados-drawer.component';
 import { InfoSensoresDrawerComponent } from './Components/AngularMaterial/info-sensores-drawer/info-sensores-drawer.component';
+import { AddTiendaDrawerComponent } from './Components/AngularMaterial/add-tienda-drawer/add-tienda-drawer.component';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import { InfoSensoresDrawerComponent } from './Components/AngularMaterial/info-s
     AddModeradorDrawerComponent,
     VerInvitadosDrawerComponent,
     InfoSensoresDrawerComponent,
+    AddTiendaDrawerComponent,
   ],
   imports: [
     BrowserModule,

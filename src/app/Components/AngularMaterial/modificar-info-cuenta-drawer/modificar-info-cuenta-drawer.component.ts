@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from 'src/app/Interfaces/user';
+import { InfoUsuario } from 'src/app/Interfaces/info-usuario';
 import { AdminService } from 'src/app/Services/admin.service';
+import { ModificarInfoUsuarioDrawerComponent } from '../modificar-info-usuario-drawer/modificar-info-usuario-drawer.component';
 
 @Component({
   selector: 'app-modificar-info-cuenta-drawer',
@@ -12,27 +13,42 @@ import { AdminService } from 'src/app/Services/admin.service';
 })
 export class ModificarInfoCuentaDrawerComponent implements OnInit {
 
-  formAddModerador: FormGroup;
+  formInfoUsuario: FormGroup;
+
+  info_usuario!: InfoUsuario;
 
   apiFailed: boolean = false;
   invalido: boolean = false;
 
-  constructor(private router: Router, private fb: FormBuilder, private route: ActivatedRoute, private adminService: AdminService, private dialogRef: MatDialogRef<ModificarInfoCuentaDrawerComponent>)
+  constructor(private router: Router, private fb: FormBuilder, private route: ActivatedRoute, private adminService: AdminService, private dialogRef: MatDialogRef<ModificarInfoUsuarioDrawerComponent>, @Inject(MAT_DIALOG_DATA) private data: { id: number })
   {
-    this.formAddModerador = this.fb.group({
-      username:  ['', [Validators.required, Validators.minLength(5)]],
-      correo:  ['', [Validators.required, Validators.email]],
-      telefono:  ['', [Validators.required, Validators.min(1000000000)]],
-      password:  ['', [Validators.required, Validators.minLength(8)]],
+    this.formInfoUsuario = this.fb.group({
+      id:  ['', [Validators.required]],
+      nombre:  ['', [Validators.required, Validators.minLength(3)]],
+      ap_paterno:  ['', [Validators.required, Validators.minLength(3)]],
+      ap_materno:  ['', [Validators.required, Validators.minLength(3)]],
+      sexo:  ['', [Validators.required]],
+      fecha_nacimiento:  ['', [Validators.required]],
     });
   }
 
   ngOnInit(): void {
+    this.getInfoUsuario(this.data.id);
   }
 
-  addUsuarioModerador(user: User)
+  getInfoUsuario(id: number)
   {
-    this.adminService.addUsuarioModerador(user).subscribe(
+    this.adminService.getInfoUsuario(id).subscribe(
+      response => {
+        this.info_usuario = response;
+        this.formInfoUsuario.patchValue(this.info_usuario)
+      }
+    );
+  }
+
+  modificarInfoUsuario(info: InfoUsuario)
+  {
+    this.adminService.updateInfoUsuario(info).subscribe(
       response => {
         this.dialogRef.close();
       },

@@ -45,7 +45,10 @@ export class ModeradoresComponent implements OnInit {
 
   addUsuarioModerador()
   {
-    const dialogRef = this.dialog.open(AddModeradorDrawerComponent);
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.enterAnimationDuration = 0;
+
+    const dialogRef = this.dialog.open(AddModeradorDrawerComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
     });
@@ -55,6 +58,7 @@ export class ModeradoresComponent implements OnInit {
   {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {id: id};
+    dialogConfig.enterAnimationDuration = 0;
 
     const dialogRef = this.dialog.open(ModificarInfoUsuarioDrawerComponent, dialogConfig);
 

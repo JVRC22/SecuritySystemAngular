@@ -6,6 +6,10 @@ import { InfoUsuario } from 'src/app/Interfaces/info-usuario';
 import { User } from 'src/app/Interfaces/user';
 import { AdminService } from 'src/app/Services/admin.service';
 import { DeleteModalComponent } from '../../AngularMaterial/delete-modal/delete-modal.component';
+import { ModificarInfoUsuarioDrawerComponent } from '../../AngularMaterial/modificar-info-usuario-drawer/modificar-info-usuario-drawer.component';
+import { io } from 'socket.io-client';
+import { environment } from 'src/environments/environment';
+import { ModificarInfoCuentaDrawerComponent } from '../../AngularMaterial/modificar-info-cuenta-drawer/modificar-info-cuenta-drawer.component';
 
 @Component({
   selector: 'app-usuarios',
@@ -14,47 +18,18 @@ import { DeleteModalComponent } from '../../AngularMaterial/delete-modal/delete-
 })
 export class UsuariosComponent implements OnInit {
 
-  formInfoUsuario: FormGroup;
-  formUsuario: FormGroup;
-  formPassword: FormGroup;
+  public socket = io(environment.urlapi);
 
   usuarios: User[] = [];
-  user!: User;
-  info_usuario!: InfoUsuario;
 
-  constructor(private router: Router, private adminService: AdminService, private fb: FormBuilder, private route: ActivatedRoute, private dialog: MatDialog) 
-  {
-    this.formInfoUsuario = this.fb.group({
-      id:  ['', [Validators.required]],
-      nombre:  ['', [Validators.required, Validators.minLength(3)]],
-      ap_paterno:  ['', [Validators.required, Validators.minLength(3)]],
-      ap_materno:  ['', [Validators.required, Validators.minLength(3)]],
-      sexo:  ['', [Validators.required]],
-      fecha_nacimiento:  ['', [Validators.required]],
-    });
-
-    this.formUsuario = this.fb.group({
-      username:  ['', [Validators.required, Validators.minLength(5)]],
-      estatus:  ['', [Validators.required]],
-    });
-
-    this.formPassword = this.fb.group({
-      password:  ['', [Validators.required, Validators.minLength(8)]],
-    });
-  }
+  constructor(private router: Router, private adminService: AdminService, private fb: FormBuilder, private route: ActivatedRoute, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getUsuariosNormales();
-  }
 
-  getUsuarioUnico(id: number)
-  {
-    this.adminService.getUsuarioUnico(id).subscribe(
-      response => {
-        this.user = response;
-        this.formUsuario.patchValue(this.user);
-      }
-    );
+    this.socket.on('usuario', (data: any) => {
+      this.getUsuariosNormales();
+    });
   }
 
   getUsuariosNormales()
@@ -66,50 +41,28 @@ export class UsuariosComponent implements OnInit {
     );
   }
 
-  getInfoUsuario(id: number)
+  modificarInfoUsuario(id: number)
   {
-    this.adminService.getInfoUsuario(id).subscribe(
-      response => {
-        this.info_usuario = response;
-        this.formInfoUsuario.patchValue(this.info_usuario)
-      }
-    );
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {id: id};
+    dialogConfig.enterAnimationDuration = 0;
+
+    const dialogRef = this.dialog.open(ModificarInfoCuentaDrawerComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
 
-  modificarUsuario(id: number, user: User)
+  modificarUsuario(id: number)
   {
-    this.adminService.updateUsuario(id, user).subscribe(
-      response => {
-        location.reload();
-      },
-      error => {
-        alert("Error al modificar el usuario");
-      }
-    );
-  }
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {id: id};
+    dialogConfig.enterAnimationDuration = 0;
 
-  modificarUsuarioPassword(id: number, user: User)
-  {
-    this.adminService.updateUsuarioPassword(id, user).subscribe(
-      response => {
-        location.reload();
-      },
-      error => {
-        alert("Error al modificar la contraseña del usuario");
-      }
-    );
-  }
+    const dialogRef = this.dialog.open(ModificarInfoUsuarioDrawerComponent, dialogConfig);
 
-  modificarInfoUsuario(info: InfoUsuario)
-  {
-    this.adminService.updateInfoUsuario(info).subscribe(
-      response => {
-        location.reload();
-      },
-      error => {
-        alert("Error al modificar la información del usuario");
-      }
-    );
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
 
   deleteUsuario(id: number)

@@ -1,1 +1,44 @@
-<p>modificar-tienda-modal works!</p>
+<!--Modal Modificar Tienda-->
+<div class="inline-flex items-center justify-center fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative w-full max-w-md max-h-full">
+        <div class="relative bg-white rounded-lg shadow">
+            <button (click)="closeDialog()" type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
+                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                <span class="sr-only">Close modal</span>
+            </button>
+
+            <div class="px-6 py-6 lg:px-8">
+                <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Modificar Tienda</h3>
+
+                <!--Formulario-->
+                <form class="space-y-6" [formGroup]="formModificarTienda" (ngSubmit)="updateTienda(formModificarTienda.value)">
+                    <!--Username-->
+                    <div>
+                        <label [ngClass]="{'text-red-700': formModificarTienda.get('nombre')?.invalid && formModificarTienda.get('nombre')?.touched}" for="nombre" class="block mb-2 text-sm font-medium text-gray-900">Nombre de Tienda</label>
+                        <input [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': formModificarTienda.get('nombre')?.invalid && formModificarTienda.get('nombre')?.touched}" formControlName="nombre" type="text" name="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Nombre" required>
+                        <p *ngIf="formModificarTienda.get('nombre')?.invalid && formModificarTienda.get('nombre')?.touched" class="mt-2 text-sm text-red-600">
+                            <span *ngIf="formModificarTienda.get('nombre')?.errors?.['required']" class="font-medium">¡Ha sucedido un error! El nombre de tienda es requerido.</span>
+                            <span *ngIf="formModificarTienda.get('nombre')?.errors?.['minlength']" class="font-medium">¡Ha sucedido un error! El nombre de tienda debe tener al menos 5 caracteres.</span>
+                        </p>
+                    </div>
+
+                    <!--Propietario-->
+                    <div>
+                        <label [ngClass]="{'text-red-700': formModificarTienda.get('user_id')?.invalid && formModificarTienda.get('user_id')?.touched}" for="user_id" class="block mb-2 text-sm font-medium text-gray-900">Propietario</label>
+                        <select [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': formModificarTienda.get('user_id')?.invalid && formModificarTienda.get('user_id')?.touched}" formControlName="user_id" name="user_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required="">
+                            <option value="" selected disabled>Seleccione un propietario</option>
+                            <option *ngFor="let user of users" [value]="user.id">
+                                <span>{{user.id}}.- <span>{{user.correo}}</span></span>
+                            </option>
+                        </select>
+                        <p *ngIf="formModificarTienda.get('user_id')?.invalid && formModificarTienda.get('user_id')?.touched" class="mt-2 text-sm text-red-600">
+                            <span *ngIf="formModificarTienda.get('user_id')?.errors?.['required']" class="font-medium">¡Ha sucedido un error! El propietario es requerido.</span>
+                        </p>
+                    </div>
+
+                    <button data-modal-hide="modificar-tienda-modal" [disabled]="formModificarTienda.invalid" type="submit" [ngClass]="{'hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300': !formModificarTienda.invalid, 'bg-blue-300': formModificarTienda.invalid}" class="w-full text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Añadir Usuario</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> 

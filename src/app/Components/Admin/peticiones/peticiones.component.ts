@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { io } from 'socket.io-client';
 import { Peticion } from 'src/app/Interfaces/peticion';
 import { User } from 'src/app/Interfaces/user';
 import { AdminService } from 'src/app/Services/admin.service';
 import { PeticionesService } from 'src/app/Services/peticiones.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-peticiones',
@@ -12,6 +14,8 @@ import { PeticionesService } from 'src/app/Services/peticiones.service';
   styleUrls: ['./peticiones.component.css']
 })
 export class PeticionesComponent implements OnInit {
+
+  public socket = io(environment.urlapi);
 
   peticiones: Peticion[] = [];
   usuarios: User[] = [];
@@ -21,6 +25,10 @@ export class PeticionesComponent implements OnInit {
   ngOnInit(): void {
     this.getPeticiones();
     this.getUsuarios();
+
+    this.socket.on('peticion', (data: any) => {
+      this.getPeticiones();
+    });
   }
 
   getPeticiones()

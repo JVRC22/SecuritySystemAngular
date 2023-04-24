@@ -47,16 +47,16 @@ const routes: Routes = [
   { path: 'cambiar_password', component:CambiarPasswordComponent, title: 'Recupera tu Cuenta - ShopShield' },
 
   //Usuarios
-  { path: 'home', component:HomeComponent, canActivate:[TokenGuard, StatusGuard, RoleGuard], data: {expectedRole: [3]},title: 'Home - ShopShield' },
+  { path: 'home', component:HomeComponent, canActivate:[TokenGuard, StatusGuard, RoleGuard], data: {expectedRole: [3]}, title: 'Home - ShopShield' },
   { path: 'sensores/:id', component:SensoresComponent, canActivate:[TokenGuard, StatusGuard, RoleGuard], data: {expectedRole: [3]}, title: 'Informacion de Tienda - ShopShield' },
   { path: 'invitaciones', component:InvitacionesComponent, canActivate:[TokenGuard, StatusGuard, RoleGuard], data: {expectedRole: [3]}, title: 'Invitaciones - ShopShield' },
   { path: 'info', component:InfoCuentaComponent, canActivate:[TokenGuard, StatusGuard, RoleGuard], data: {expectedRole: [3]}, title: 'Informacion de Cuenta - ShopShield' },
 
   //Administradores
-  { path: 'usuarios', component:UsuariosComponent, title: 'Usuarios - ShopShield' },
-  { path: 'moderadores', component:ModeradoresComponent, title: 'Moderadores - ShopShield' },
+  { path: 'usuarios', component:UsuariosComponent, canActivate:[TokenGuard, StatusGuard, RoleGuard], data: {expectedRole: [1,2]}, title: 'Usuarios - ShopShield' },
+  { path: 'moderadores', component:ModeradoresComponent, canActivate:[TokenGuard, StatusGuard, RoleGuard], data: {expectedRole: [1,2]}, title: 'Moderadores - ShopShield' },
   { path: 'tiendas', component:TiendasComponent, title: 'Tiendas - ShopShield' },
-  { path: 'peticiones', component:PeticionesComponent, title: 'Peticiones - ShopShield' },
+  { path: 'peticiones', component:PeticionesComponent, canActivate:[TokenGuard, StatusGuard, RoleGuard], data: {expectedRole: [1,2]}, title: 'Peticiones - ShopShield' },
 ];
 
 @NgModule({
