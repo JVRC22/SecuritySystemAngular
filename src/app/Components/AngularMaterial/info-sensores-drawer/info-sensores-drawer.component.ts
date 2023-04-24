@@ -53,56 +53,50 @@ export class InfoSensoresDrawerComponent implements OnInit {
   getTemperatura()
   {
     this.sensoresService.getTemperatura(this.data.id).subscribe((data: any) => {
-      console.log(data);
-      this.temperatura = data;
+      this.temperatura = data[0];
+
     });
   }
 
   getAgua()
   {
     this.sensoresService.getAgua(this.data.id).subscribe((data: any) => {
-      console.log(data);
-      this.agua = data;
+      this.agua = data[0];
     });
   }
 
   getLuz()
   {
     this.sensoresService.getLuz(this.data.id).subscribe((data: any) => {
-      console.log(data);
-      this.luz = data;
+      this.luz = data[0];
     });
   }
 
   getHumo()
   {
     this.sensoresService.getHumo(this.data.id).subscribe((data: any) => {
-      console.log(data);
-      this.humo = data;
+      this.humo = data[0];
     });
   }
 
   getMovimiento()
   {
     this.sensoresService.getMovimiento(this.data.id).subscribe((data: any) => {
-      console.log(data);
-      this.movimiento = data;
+      this.movimiento = data[0];
     });
   }
 
   getInfrarrojo()
   {
     this.sensoresService.getInfrarrojo(this.data.id).subscribe((data: any) => {
-      console.log(data);
-      this.infrarrojo = data;
+      this.infrarrojo = data[0];
     });
   }
 
   getUltrasonico()
   {
     this.sensoresService.getDistancia(this.data.id).subscribe((data: any) => {
-      console.log(data);
-      this.ultrasonico = data;
+      this.ultrasonico = data[0];
     });
   }
 
