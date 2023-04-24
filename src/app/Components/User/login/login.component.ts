@@ -38,12 +38,12 @@ export class LoginComponent implements OnInit {
         
         if (response.role == 1 || response.role == 2)
         {
-          location.assign('/usuarios');
+          this.router.navigate(['/usuarios']);
         }
 
         else if (response.role == 3)
         {
-          location.assign('/home');
+          this.router.navigate(['/home']);
         }
       },
       error => {
