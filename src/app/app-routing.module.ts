@@ -55,7 +55,7 @@ const routes: Routes = [
   //Administradores
   { path: 'usuarios', component:UsuariosComponent, canActivate:[TokenGuard, StatusGuard, RoleGuard], data: {expectedRole: [1,2]}, title: 'Usuarios - ShopShield' },
   { path: 'moderadores', component:ModeradoresComponent, canActivate:[TokenGuard, StatusGuard, RoleGuard], data: {expectedRole: [1,2]}, title: 'Moderadores - ShopShield' },
-  { path: 'tiendas', component:TiendasComponent, title: 'Tiendas - ShopShield' },
+  { path: 'tiendas', component:TiendasComponent, canActivate:[TokenGuard, StatusGuard, RoleGuard], data: {expectedRole: [1,2]}, title: 'Tiendas - ShopShield' },
   { path: 'peticiones', component:PeticionesComponent, canActivate:[TokenGuard, StatusGuard, RoleGuard], data: {expectedRole: [1,2]}, title: 'Peticiones - ShopShield' },
 ];
 
