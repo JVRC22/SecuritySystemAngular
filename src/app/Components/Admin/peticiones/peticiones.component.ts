@@ -55,13 +55,9 @@ export class PeticionesComponent implements OnInit {
 
     this.peticionesService.updateStatusPeticion(id, peticion).subscribe(
       response => {
-        console.log(response);
-        alert("Petición aceptada");
-        location.reload();
       },
       error => {
         console.log(error);
-        alert("Error al aceptar la petición");
       }
     );
   }
@@ -72,13 +68,9 @@ export class PeticionesComponent implements OnInit {
 
     this.peticionesService.updateStatusPeticion(id, peticion).subscribe(
       response => {
-        console.log(response);
-        alert("Petición denegada");
-        location.reload();
       },
       error => {
         console.log(error);
-        alert("Error al denegar la petición");
       }
     );
   }

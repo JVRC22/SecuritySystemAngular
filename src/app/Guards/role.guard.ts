@@ -32,7 +32,7 @@ export class RoleGuard implements CanActivate {
         }
 
         alert("No tienes permisos para acceder a esta pagina");
-        this.router.navigate(['/welcome']);
+        this.router.navigate(['/login']);
         return false;
       } 
       
@@ -45,7 +45,7 @@ export class RoleGuard implements CanActivate {
     catch(error) 
     {
       alert("No tienes permisos para acceder a esta pagina");
-      this.router.navigate(['/welcome']);
+      this.router.navigate(['/login']);
       return false;
     }
   }

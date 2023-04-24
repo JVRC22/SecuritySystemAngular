@@ -30,7 +30,6 @@ export class SolicitudAdminComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    alert("Tu cuenta ha sido desactivada, contacta con el administrador.");
     this.id = Number(localStorage.getItem('id'));
     this.username = String(localStorage.getItem('username'));
     this.fecha = new Date();

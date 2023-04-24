@@ -22,7 +22,7 @@ export class StatusGuard implements CanActivate {
       localStorage.removeItem('username');
       localStorage.removeItem('email');
       localStorage.removeItem('role');
-      location.assign('/activacion');
+      this.router.navigate(['/activacion']);
       return false;
     }
 
