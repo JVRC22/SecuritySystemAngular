@@ -114,7 +114,11 @@ export class InvitacionesComponent implements OnInit {
   {
     this.userService.getTiendasOwner().subscribe(
       (data) => {
-        this.tiendasOwner = data;
+        for (let x in data)
+        {
+          if (data[x].user_id === Number(this.id))
+            this.tiendasOwner.push(data[x]);
+        }
       }
     );
   }

@@ -46,6 +46,8 @@ export class TiendasComponent implements OnInit {
 
     this.socket.on('tienda', (data: any) => {
       this.getTiendas();
+      this.getOwners();
+      this.getUsers();
     });
   }
 
@@ -63,7 +65,6 @@ export class TiendasComponent implements OnInit {
   {
     this.usersInvitacionesService.getOwners().subscribe(
       data => {
-        console.log(data);
         this.owners = data;
       }
     );
@@ -80,13 +81,11 @@ export class TiendasComponent implements OnInit {
 
   getInfoOwnersTienda(tienda_id: number)
   {
-    console.log(this.owners);
 
     const owner = this.owners.find(owner => owner.tienda_id === tienda_id);
     console.log(owner);
 
     const user = this.users.find(user => user.id === owner?.user_id);
-    //console.log(user);
 
     return user ? user.correo : "";
   }

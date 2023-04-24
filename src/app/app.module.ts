@@ -97,10 +97,6 @@ import { AddTiendaDrawerComponent } from './Components/AngularMaterial/add-tiend
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true
-    },
-    {
-      provide: LocationStrategy,
-      useClass: HashLocationStrategy,
     }
   ],
   bootstrap: [AppComponent]
