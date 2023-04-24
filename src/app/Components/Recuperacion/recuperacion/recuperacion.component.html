@@ -65,7 +65,7 @@
                                         </div>
                                         
                                         <div class="basis-1/2 mt-9 pt-0.5 ml-2 pb-1 self-end">
-                                            <button (click)="enviarCodigo1()" *ngIf="!enviado1" [ngClass]="{'button-failed': apiFailed}" (animationend)="onAnimationEnd()" type="submit" class="px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">Enviar Codigo</button>
+                                            <button (click)="enviarCodigo1()" *ngIf="!enviado1" [ngClass]="{'button-failed': apiFailed}" (animationend)="onAnimationEnd()" type="button" class="px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">Enviar Codigo</button>
                                             <button *ngIf="enviado1" [disabled]="formCode1.invalid" [ngClass]="{'button-failed': apiFailed, 'hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300': !formCode1.invalid, 'bg-blue-300': formCode1.invalid}" (animationend)="onAnimationEnd()" type="submit" class="px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg">Verificar Codigo</button>
                                         </div>
                                     </div>
@@ -118,7 +118,7 @@
                                         </div>
                                         
                                         <div class="basis-1/2 mt-9 pt-0.5 ml-2 pb-1 self-end">
-                                            <button (click)="enviarCodigo2()" *ngIf="!enviado2" [ngClass]="{'button-failed': apiFailed}" (animationend)="onAnimationEnd()" type="submit" class="px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">Enviar Codigo</button>
+                                            <button (click)="enviarCodigo2()" *ngIf="!enviado2" [ngClass]="{'button-failed': apiFailed}" (animationend)="onAnimationEnd()" type="button" class="px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">Enviar Codigo</button>
                                             <button *ngIf="enviado2" [disabled]="formCode2.invalid" [ngClass]="{'button-failed': apiFailed, 'hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300': !formCode2.invalid, 'bg-blue-300': formCode2.invalid}" (animationend)="onAnimationEnd()" type="submit" class="px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg">Verificar Codigo</button>
                                         </div>
                                     </div>

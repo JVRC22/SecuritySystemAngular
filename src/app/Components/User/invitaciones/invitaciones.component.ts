@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { io } from 'socket.io-client';
 import { InfoUsuario } from 'src/app/Interfaces/info-usuario';
 import { Invitacion } from 'src/app/Interfaces/invitacion';
 import { Tienda } from 'src/app/Interfaces/tienda';
@@ -9,6 +10,7 @@ import { User } from 'src/app/Interfaces/user';
 import { AdminService } from 'src/app/Services/admin.service';
 import { TiendasService } from 'src/app/Services/tiendas.service';
 import { UserService } from 'src/app/Services/user.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-invitaciones',
@@ -16,6 +18,8 @@ import { UserService } from 'src/app/Services/user.service';
   styleUrls: ['./invitaciones.component.css']
 })
 export class InvitacionesComponent implements OnInit {
+
+  public socket = io(environment.urlapi);
 
   id: number = 0;
 
@@ -72,6 +76,17 @@ export class InvitacionesComponent implements OnInit {
     this.getAllUsers();
     this.getInvitaciones();
     this.getAllInfoUsers();
+
+    this.socket.on('invitacion', (data: any) => {
+      this.id = localStorage.getItem('id') as unknown as number;
+      this.setData();
+      this.getTiendasOwner();
+      this.getAllTiendas();
+      this.getTiendas();
+      this.getAllUsers();
+      this.getInvitaciones();
+      this.getAllInfoUsers();
+    });
   }
 
   getTiendas()
@@ -175,7 +190,7 @@ export class InvitacionesComponent implements OnInit {
 
     this.userService.procesarInvitacion(dict).subscribe(
       (data) => {
-        location.reload();
+        this.router.navigate(['/home']);
       },
       (error) => {
         this.invalido2 = true;
@@ -188,7 +203,7 @@ export class InvitacionesComponent implements OnInit {
   {
     this.userService.enviarInvitacion(invitacion).subscribe(
       (data) => {
-        location.reload();
+        this.router.navigate(['/home']);
       },
       (error) => {
         this.invalido1 = true;
@@ -201,7 +216,7 @@ export class InvitacionesComponent implements OnInit {
   {
     this.userService.unirmeATienda(invitacion).subscribe(
       (data) => {
-        location.assign('/home');
+        this.router.navigate(['/home']);
       },
       (error) => {
         this.invalido = true;

@@ -1,17 +1,11 @@
-<div class="flex justify-center my-8">
-    <div class="basis-1/2 bg-gray-100 border border-gray-300 border-2 rounded-lg">
-        <div class="bg-blue-400 border-0 border-gray-300 border-b-2 rounderd-lg" style="height: 150px;">
+<div class="md:flex justify-center my-8">
+    <div class="md:basis-1/2 bg-gray-100 border border-gray-300 border-2 rounded-lg mt-3">
+        <div class="bg-blue-400 border-0 border-gray-300 border-b-2 rounderd-lg" style="height: 50px;">
         </div>
 
         <!--Info Cuenta-->
-        <div class="flex justify-end bg-gray-100">
-            <div hidden class="basis-1/3 bg-white border border-2 border-gray-300 rounded-lg px-6 py-4 mx-4" style="transform: translateY(-25%);">
-                <div class="flex justify-center items-center h-full">
-                    <img class="rounded-full border border-2 border-gray-300 basis-auto" style="max-width: 200px; max-height: 200px;" src="../../../../assets/toby.jpeg" alt="foto-perfil">
-                </div>
-            </div>
-
-            <div class="basis-full bg-white border border-2 border-gray-300 rounded-lg px-6 py-4 mx-4" style="transform: translateY(-25%);">
+        <div class="bg-gray-100">
+            <div class="bg-white border border-2 border-gray-300 rounded-lg px-6 py-4 mx-4 mt-3">
                 <!--Titulo-->
                 <div>
                     <span class="text-xl font-medium">Informacion de Cuenta</span>
@@ -62,7 +56,7 @@
         </div>
 
         <!--Info Personal-->
-        <div class="mt-4 mx-4 px-6 py-4 bg-white border border-2 border-gray-300 rounded-lg" style="transform: translateY(-25%);">
+        <div class="mt-4 mx-4 px-6 py-4 bg-white border border-2 border-gray-300 rounded-lg mt-3">
             <!--Titulo-->
             <div>
                 <span class="text-xl font-medium">Informacion de Usuario</span>
@@ -71,9 +65,9 @@
             <!--Formulario-->
             <div class="mt-2">
                 <form [formGroup]="formInfoUsuario" (ngSubmit)="updateMyInfoPersonal(formInfoUsuario.value)">
-                    <div class="flex">
+                    <div class="md:flex">
                         <!--Nombre-->
-                        <div class="mb-6 basis-1/2 mr-2">
+                        <div class="mb-6 md:basis-1/2 md:mr-2">
                             <label [ngClass]="{'text-red-700': formInfoUsuario.get('nombre')?.invalid && formInfoUsuario.get('nombre')?.touched || invalido1}" for="nombre" class="block mb-2 text-sm font-medium text-gray-900">Nombre </label>
                             <input formControlName="nombre" [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': formInfoUsuario.get('nombre')?.invalid && formInfoUsuario.get('nombre')?.touched || invalido1}" type="text" id="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Juan Jose">
                             <p *ngIf="formInfoUsuario.get('nombre')?.invalid && formInfoUsuario.get('nombre')?.touched" class="mt-2 text-sm text-red-600">
@@ -82,7 +76,7 @@
                         </div>
     
                         <!--Apellido Paterno-->
-                        <div class="mb-6 basis-1/2 ml-2">
+                        <div class="mb-6 md:basis-1/2 md:ml-2">
                             <label [ngClass]="{'text-red-700': formInfoUsuario.get('ap_paterno')?.invalid && formInfoUsuario.get('ap_paterno')?.touched || invalido1}" for="ap_paterno" class="block mb-2 text-sm font-medium text-gray-900">Apellido Paterno</label>
                             <input [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': formInfoUsuario.get('ap_paterno')?.invalid && formInfoUsuario.get('ap_paterno')?.touched || invalido1}" formControlName="ap_paterno" type="text" name="ap_paterno" id="ap_paterno" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Rodríguez" required>
                             <p *ngIf="formInfoUsuario.get('ap_paterno')?.invalid && formInfoUsuario.get('ap_paterno')?.touched" class="mt-2 text-sm text-red-600">
@@ -92,9 +86,9 @@
                         </div>
                     </div>
     
-                    <div class="flex">
+                    <div class="md:flex">
                         <!--Apellido Materno-->
-                        <div class="mb-6 basis-1/2 mr-2">
+                        <div class="mb-6 md:basis-1/2 md:mr-2">
                             <label [ngClass]="{'text-red-700': formInfoUsuario.get('ap_materno')?.invalid && formInfoUsuario.get('ap_materno')?.touched || invalido1}" for="ap_materno" class="block mb-2 text-sm font-medium text-gray-900">Apellido Materno</label>
                             <input [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': formInfoUsuario.get('ap_materno')?.invalid && formInfoUsuario.get('ap_materno')?.touched || invalido1}" formControlName="ap_materno" type="text" name="ap_materno" id="ap_materno" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="García" required>
                             <p *ngIf="formInfoUsuario.get('ap_materno')?.invalid && formInfoUsuario.get('ap_materno')?.touched" class="mt-2 text-sm text-red-600">
@@ -104,7 +98,7 @@
                         </div>
     
                         <!--Sexo-->
-                        <div class="mb-6 basis-1/2 ml-2">
+                        <div class="mb-6 md:basis-1/2 md:ml-2">
                             <label [ngClass]="{'text-red-700': formInfoUsuario.get('sexo')?.invalid && formInfoUsuario.get('sexo')?.touched || invalido1}" for="sexo" class="block mb-2 text-sm font-medium text-gray-900">Sexo</label>
                             <select [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': formInfoUsuario.get('sexo')?.invalid && formInfoUsuario.get('sexo')?.touched || invalido1}" formControlName="sexo" name="sexo" id="sexo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                                 <option value="" disabled selected>Seleccione una opción</option>
@@ -117,9 +111,9 @@
                         </div>
                     </div>
     
-                    <div class="flex">
+                    <div class="md:flex">
                         <!--Fecha de Nacimiento-->
-                        <div class="basis-1/2 mr-2">
+                        <div class="md:basis-1/2 md:mr-2">
                             <label [ngClass]="{'text-red-700': formInfoUsuario.get('fecha_nacimiento')?.invalid && formInfoUsuario.get('fecha_nacimiento')?.touched || invalido1}" for="fecha_nacimiento" class="block mb-2 text-sm font-medium text-gray-900">Fecha de Nacimiento</label>
                             <input [ngClass]="{'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500': formInfoUsuario.get('fecha_nacimiento')?.invalid && formInfoUsuario.get('fecha_nacimiento')?.touched || invalido1}" formControlName="fecha_nacimiento" type="date" name="fecha_nacimiento" id="fecha_nacimiento" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                             <p *ngIf="formInfoUsuario.get('fecha_nacimiento')?.invalid && formInfoUsuario.get('fecha_nacimiento')?.touched" class="mt-2 text-sm text-red-600">
@@ -128,7 +122,7 @@
                         </div>
     
                         <!--Boton-->
-                        <div class="basis-1/2 self-end mb-px text-end">
+                        <div class="md:basis-1/2 mt-4 md:mt-0 self-end mb-px text-end">
                             <button [disabled]="formInfoUsuario.invalid" type="submit" [ngClass]="{'button-failed': apiFailed1, 'hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300': !formInfoUsuario.invalid, 'bg-blue-300': formInfoUsuario.invalid}" (animationend)="onAnimationEnd()" class="text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Modificar Información</button>
                         </div>
                     </div>
@@ -150,8 +144,8 @@
         </div>
 
         <!--Cambiar Password-->
-        <div class="bg-gray-100 px-4 md:pt-4">
-            <div class="bg-white border border-2 border-gray-300 rounded-lg px-6 py-4 md:mr-2" style="transform: translateY(-15%);">
+        <div class="bg-gray-100 px-4 md:pt-4 mt-3 mb-4">
+            <div class="bg-white border border-2 border-gray-300 rounded-lg px-6 py-4">
                 <!--Titulo-->
                 <div>
                     <span class="text-xl font-medium">Cambiar Contraseña</span>

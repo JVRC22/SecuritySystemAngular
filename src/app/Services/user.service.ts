@@ -53,6 +53,24 @@ export class UserService {
     );
   }
 
+  recuperacionCorreo(dict: {})
+  {
+    return this.http.post(this.url_api + "/send/email", dict)
+    .pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
+  recuperacionTelefono(dict: {})
+  {
+    return this.http.post(this.url_api + "/send/sms", dict)
+    .pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
   verifyCode(id: number, user: User)
   {
     const dict = {codigo_verificacion: String(user.codigo_verificacion)}

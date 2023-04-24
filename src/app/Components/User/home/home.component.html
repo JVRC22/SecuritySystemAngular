@@ -1,5 +1,13 @@
 <div class="flex flex-wrap">
-  <div *ngFor="let tiendaUser of misTiendas" class="basis-full md:basis-1/3 px-6 py-4 border">
+  <!--Lenght 0-->
+  <div *ngIf="misTiendas.length <= 0" class="w-full flex justify-center t-5">
+    <div class="px-4 py-3 md:basis-1/2">
+        <h1 class="md:text-center text-3xl font-medium mb-3">No hay tiendas para mostrar</h1>
+        <p class="md:text-center text-lg">No tienes tiendas asignadas en este momento. Unete a una tienda o espera a que un administrador te agregue a una.</p>
+    </div>
+  </div>
+
+  <div *ngFor="let tiendaUser of misTiendas" class="basis-full md:basis-1/3 px-6 py-4">
     <div (click)="sensores(tiendaUser.tienda_id)" class="border border-gray-300 border-2 rounded-lg bg-white hover:bg-gray-200 px-4 py-2 h-full">
       <div class="flex flex-wrap">
         <div class="basis-1/2">

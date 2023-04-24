@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, of } from 'rxjs';
 import { InfoUsuario } from 'src/app/Interfaces/info-usuario';
 import { User } from 'src/app/Interfaces/user';
+import { AdminService } from 'src/app/Services/admin.service';
 import { UserService } from 'src/app/Services/user.service';
 
 @Component({
@@ -19,13 +20,15 @@ export class RecuperacionComponent implements OnInit {
   formCode2: FormGroup;
   formRespuesta: FormGroup;
 
+  usuario!: User;
+
   apiFailed: boolean = false;
   invalido: boolean = false;
 
   enviado1: boolean = false;
   enviado2: boolean = false;
   
-  constructor(private router: Router, private fb: FormBuilder, private route: ActivatedRoute, private userService: UserService)
+  constructor(private router: Router, private fb: FormBuilder, private route: ActivatedRoute, private userService: UserService, private adminService: AdminService)
   {
     this.formCode1 = this.fb.group({
       codigo_verificacion: ['', [Validators.required]],
@@ -44,8 +47,19 @@ export class RecuperacionComponent implements OnInit {
   
   ngOnInit(): void {
     this.id = localStorage.getItem('id') as unknown as number;
+    this.getUsuario();
     this.setData();
     this.getPregunta();
+  }
+
+  getUsuario()
+  {
+    this.adminService.getUsuarioUnico(this.id).subscribe(
+      (data: any) => {
+        this.usuario = data;
+        console.log(this.usuario);
+      }
+    );
   }
 
   setData()
@@ -55,12 +69,36 @@ export class RecuperacionComponent implements OnInit {
 
   enviarCodigo1()
   {
-    this.enviado1 = true;
+    const dict = {correo: this.usuario.correo};
+    console.log(dict);
+
+    this.userService.recuperacionCorreo(dict).subscribe(
+      data => {
+        this.enviado1 = true;
+      },
+      error => {
+        console.log(error);
+        this.apiFailed = true;
+        this.invalido = true;
+      }
+    );
   }
 
   enviarCodigo2()
   {
-    this.enviado2 = true;
+    const dict = {telefono: this.usuario.telefono};
+    console.log(dict);
+
+    this.userService.recuperacionTelefono(dict).subscribe(
+      data => {
+        this.enviado2 = true;
+      },
+      error => {
+        console.log(error);
+        this.apiFailed = true;
+        this.invalido = true;
+      }
+    );
   }
 
   getPregunta()
@@ -74,7 +112,11 @@ export class RecuperacionComponent implements OnInit {
 
   onSubmitCode(user: User)
   {
-    this.router.navigate(['/cambiar_password']);
+    this.userService.verifyCode(this.id, user).subscribe(
+      data => {
+        this.router.navigate(['/cambiar_password']);
+      }
+    );
   }
 
   onSubmitRespuesta(infoUser: InfoUsuario)

@@ -39,7 +39,7 @@ export class ActivacionCuentaComponent implements OnInit {
   {
     this.userService.verifyCode(this.id, user).subscribe(
       (data) => {
-        this.router.navigate(['/welcome']);
+        this.router.navigate(['/login']);
       },
       (error) => {
         this.invalido = true;
